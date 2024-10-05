@@ -22,13 +22,11 @@ function App() {
     <>
       <div
         id="project-wrapper"
-        className={`min-h-screen flex justify-center ${
-          isDarkMode ? "bg-slate-900" : "bg-gray-100"
-        }`}
+        className="min-h-screen flex justify-center dark:bg-slate-900 bg-gray-100"
       >
         <div
           id="main-container"
-          className="p-4 w-[80%] bg-sky-200 shadow-lg rounded-lg flex flex-col gap-5 my-5"
+          className="p-4 w-[80%] dark:bg-slate-700 bg-sky-200 shadow-lg rounded-lg flex flex-col gap-5 my-5"
         >
           <SideBar toggleDarkMode={toggleDarkMode} />
         </div>
