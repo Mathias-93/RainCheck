@@ -27,7 +27,7 @@ function App() {
     <>
       <div
         id="project-wrapper"
-        className="min-h-screen flex justify-center dark:bg-slate-900 bg-gray-100 transition-colors duration-300"
+        className="min-h-screen flex justify-center dark:bg-slate-900 bg-gray-100 transition-colors duration-300 font-inter"
       >
         <div
           id="main-container"
