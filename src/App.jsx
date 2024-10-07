@@ -1,4 +1,9 @@
 import SideBar from "./components/SideBar";
+import SearchBar from "./components/SearchBar";
+import WeatherPanel from "./components/WeatherPanel";
+import TodaysForecast from "./components/TodaysForecast";
+import WeatherConditions from "./components/WeatherConditions";
+import FutureForecast from "./components/FutureForecast";
 import { useState, useEffect } from "react";
 
 function App() {
@@ -26,9 +31,18 @@ function App() {
       >
         <div
           id="main-container"
-          className="p-4 w-[80%] dark:bg-slate-700 bg-sky-200 shadow-lg rounded-lg flex flex-col gap-5 my-5 transition-colors duration-300"
+          className="p-4 w-[80%] dark:bg-slate-700 bg-sky-200 shadow-lg rounded-lg flex gap-5 my-5 transition-colors duration-300"
         >
           <SideBar toggleDarkMode={toggleDarkMode} isDarkMode={isDarkMode} />
+          <div id="middle-container" className="flex flex-col">
+            <SearchBar />
+            <WeatherPanel />
+            <TodaysForecast />
+            <WeatherConditions />
+          </div>
+          <div id="future-forecast-div">
+            <FutureForecast />
+          </div>
         </div>
       </div>
     </>
