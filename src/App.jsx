@@ -9,6 +9,7 @@ import FutureForecast from "./components/FutureForecast";
 function App() {
   const [location, setLocation] = useState("Stockholm");
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [data, setData] = useState([]);
 
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme");
@@ -23,7 +24,8 @@ function App() {
       try {
         const res = await fetch(url);
         const data = await res.json();
-        console.log("DATA:", data);
+        console.log(data);
+        setData(data);
       } catch (err) {
         console.log(err.message);
       }
@@ -50,7 +52,7 @@ function App() {
           <SideBar toggleDarkMode={toggleDarkMode} isDarkMode={isDarkMode} />
           <div id="middle-container" className="flex flex-col">
             <SearchBar />
-            <WeatherPanel />
+            <WeatherPanel data={data} />
             <TodaysForecast />
             <WeatherConditions />
           </div>
