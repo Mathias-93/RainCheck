@@ -1,12 +1,13 @@
+import { useState, useEffect } from "react";
 import SideBar from "./components/SideBar";
 import SearchBar from "./components/SearchBar";
 import WeatherPanel from "./components/WeatherPanel";
 import TodaysForecast from "./components/TodaysForecast";
 import WeatherConditions from "./components/WeatherConditions";
 import FutureForecast from "./components/FutureForecast";
-import { useState, useEffect } from "react";
 
 function App() {
+  const [location, setLocation] = useState("Stockholm");
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   useEffect(() => {
@@ -15,6 +16,19 @@ function App() {
       setIsDarkMode(savedTheme === "dark");
       document.documentElement.classList.toggle("dark", savedTheme === "dark");
     }
+    const LOCATION_KEY = import.meta.env.VITE_WEATHER_APP_API_KEY;
+    const fetchAPIdata = async () => {
+      const url = `http://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=1&appid=${LOCATION_KEY}`;
+
+      try {
+        const res = await fetch(url);
+        const data = await res.json();
+        console.log("DATA:", data);
+      } catch (err) {
+        console.log(err.message);
+      }
+    };
+    fetchAPIdata();
   }, []);
 
   const toggleDarkMode = () => {
