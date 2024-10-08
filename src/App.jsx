@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import SideBar from "./components/SideBar";
 import SearchBar from "./components/SearchBar";
 import WeatherPanel from "./components/WeatherPanel";
@@ -10,6 +10,7 @@ function App() {
   const [location, setLocation] = useState(null);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [data, setData] = useState([]);
+  const [weatherData, setWeatherData] = useState([]);
   const [inputValue, setInputValue] = useState("");
 
   // Generic API fecthing function
@@ -42,10 +43,18 @@ function App() {
           import.meta.env.VITE_WEATHER_APP_API_KEY
         }`
       );
+
       setData(data);
       if (data.length > 0) {
         setLocation(data[0].name);
       }
+
+      const { lat, lon } = data[0];
+
+      const APIWeatherData = await fetchAPIdata(
+        `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&hourly=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation_probability,precipitation,wind_speed_10m,wind_direction_10m`
+      );
+      setWeatherData(APIWeatherData);
     };
 
     fetchData();
