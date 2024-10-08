@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import SideBar from "./components/SideBar";
 import SearchBar from "./components/SearchBar";
 import WeatherPanel from "./components/WeatherPanel";
@@ -7,22 +7,18 @@ import WeatherConditions from "./components/WeatherConditions";
 import FutureForecast from "./components/FutureForecast";
 
 function App() {
-  const [location, setLocation] = useState("Stockholm");
+  const [location, setLocation] = useState(null);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [data, setData] = useState([]);
   const [inputValue, setInputValue] = useState("");
 
-  // Location API fetching function
-  const fetchAPIdata = async () => {
-    const LOCATION_KEY = import.meta.env.VITE_WEATHER_APP_API_KEY;
-    const url = `http://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=1&appid=${LOCATION_KEY}`;
-
+  // Generic API fecthing function
+  const fetchAPIdata = async (url) => {
     try {
       const res = await fetch(url);
       const data = await res.json();
       console.log(data);
-      setData(data);
-      setLocation(data[0].name);
+      return data;
     } catch (err) {
       console.log(err.message);
     }
@@ -39,7 +35,20 @@ function App() {
 
   // Fetch API when the location variable changes
   useEffect(() => {
-    fetchAPIdata();
+    if (!location) return;
+    const fetchData = async () => {
+      const data = await fetchAPIdata(
+        `http://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=1&appid=${
+          import.meta.env.VITE_WEATHER_APP_API_KEY
+        }`
+      );
+      setData(data);
+      if (data.length > 0) {
+        setLocation(data[0].name);
+      }
+    };
+
+    fetchData();
   }, [location]);
 
   const toggleDarkMode = () => {
