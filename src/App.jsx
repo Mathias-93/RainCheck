@@ -10,7 +10,7 @@ function App() {
   const [location, setLocation] = useState(null);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [data, setData] = useState([]);
-  const [weatherData, setWeatherData] = useState([]);
+  const [weatherData, setWeatherData] = useState({});
   const [inputValue, setInputValue] = useState("");
 
   // Generic API fecthing function
@@ -49,12 +49,14 @@ function App() {
         setLocation(data[0].name);
       }
 
-      const { lat, lon } = data[0];
+      const { lat, lon } = data[0]; // Deconstruct latitude and longitude from location API data
 
       const APIWeatherData = await fetchAPIdata(
-        `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&hourly=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation_probability,precipitation,wind_speed_10m,wind_direction_10m`
+        // Using the lat and lon from location to get current local weather
+        `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,rain,wind_speed_10m&hourly=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation_probability,precipitation,wind_speed_10m,wind_direction_10m,uv_index,is_day`
       );
-      setWeatherData(APIWeatherData);
+      if (APIWeatherData) setWeatherData(APIWeatherData);
+      console.log(weatherData);
     };
 
     fetchData();
@@ -94,7 +96,12 @@ function App() {
               inputValue={inputValue}
               handleInputChange={handleInputChange}
             />
-            <WeatherPanel location={location} />
+
+            {weatherData && weatherData.current ? (
+              <WeatherPanel location={location} weatherData={weatherData} />
+            ) : (
+              <p>Loading data..</p>
+            )}
             <TodaysForecast />
             <WeatherConditions />
           </div>
