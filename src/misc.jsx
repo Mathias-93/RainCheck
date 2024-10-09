@@ -7,21 +7,19 @@ import WeatherConditions from "./components/WeatherConditions";
 import FutureForecast from "./components/FutureForecast";
 
 function App() {
-  const [location, setLocation] = useState("Stockholm");
+  const [location, setLocation] = useState("");
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [data, setData] = useState([]);
+  const [weatherData, setWeatherData] = useState({});
   const [inputValue, setInputValue] = useState("");
 
-  // Location API fetching function
-  const fetchAPIdata = async () => {
-    const LOCATION_KEY = import.meta.env.VITE_WEATHER_APP_API_KEY;
-    const url = `http://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=1&appid=${LOCATION_KEY}`;
-
+  // Generic API fecthing function
+  const fetchAPIdata = async (url) => {
     try {
       const res = await fetch(url);
       const data = await res.json();
-      setData(data);
-      setLocation(data[0].name);
+      console.log(data);
+      return data;
     } catch (err) {
       console.log(err.message);
     }
@@ -38,7 +36,30 @@ function App() {
 
   // Fetch API when the location variable changes
   useEffect(() => {
-    fetchAPIdata();
+    if (!location) return;
+    const fetchData = async () => {
+      const data = await fetchAPIdata(
+        `http://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=1&appid=${
+          import.meta.env.VITE_WEATHER_APP_API_KEY
+        }`
+      );
+
+      setData(data);
+      if (data.length > 0) {
+        setLocation(data[0].name);
+      }
+
+      const { lat, lon } = data[0]; // Deconstruct latitude and longitude from location API data
+
+      const APIWeatherData = await fetchAPIdata(
+        // Using the lat and lon from location to get current local weather
+        `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,rain,wind_speed_10m&hourly=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation_probability,precipitation,wind_speed_10m,wind_direction_10m,uv_index,is_day`
+      );
+      if (APIWeatherData) setWeatherData(APIWeatherData);
+      console.log(weatherData);
+    };
+
+    fetchData();
   }, [location]);
 
   const toggleDarkMode = () => {
@@ -75,7 +96,12 @@ function App() {
               inputValue={inputValue}
               handleInputChange={handleInputChange}
             />
-            <WeatherPanel location={location} />
+
+            {weatherData && weatherData.current ? (
+              <WeatherPanel location={location} weatherData={weatherData} />
+            ) : (
+              <p>No data found. Please serach for a location.</p>
+            )}
             <TodaysForecast />
             <WeatherConditions />
           </div>

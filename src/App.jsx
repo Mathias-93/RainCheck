@@ -7,7 +7,7 @@ import WeatherConditions from "./components/WeatherConditions";
 import FutureForecast from "./components/FutureForecast";
 
 function App() {
-  const [location, setLocation] = useState(null);
+  const [location, setLocation] = useState("Stockholm");
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [data, setData] = useState([]);
   const [weatherData, setWeatherData] = useState({});
@@ -50,13 +50,12 @@ function App() {
       }
 
       const { lat, lon } = data[0]; // Deconstruct latitude and longitude from location API data
-
+      /* https://api.open-meteo.com/v1/forecast?latitude=59.3294&longitude=18.0687&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,rain,weather_code,wind_speed_10m&hourly=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation_probability,precipitation,weather_code,cloud_cover,wind_speed_10m,uv_index,is_day&daily=weather_code,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset,daylight_duration,sunshine_duration,uv_index_max,precipitation_sum,rain_sum,precipitation_hours,precipitation_probability_max,wind_speed_10m_max&timezone=auto */
       const APIWeatherData = await fetchAPIdata(
         // Using the lat and lon from location to get current local weather
-        `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,rain,wind_speed_10m&hourly=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation_probability,precipitation,wind_speed_10m,wind_direction_10m,uv_index,is_day`
+        `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,rain,weather_code,wind_speed_10m&hourly=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation_probability,precipitation,weather_code,cloud_cover,wind_speed_10m,uv_index,is_day&daily=weather_code,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset,daylight_duration,sunshine_duration,uv_index_max,precipitation_sum,rain_sum,precipitation_hours,precipitation_probability_max,wind_speed_10m_max&timezone=auto`
       );
       if (APIWeatherData) setWeatherData(APIWeatherData);
-      console.log(weatherData);
     };
 
     fetchData();
@@ -100,12 +99,16 @@ function App() {
             {weatherData && weatherData.current ? (
               <WeatherPanel location={location} weatherData={weatherData} />
             ) : (
-              <p>Loading data..</p>
+              <div className="h-[200px] ml-[100px] mt-[20px] flex gap-16 text-slate-700 dark:text-gray-200 transition-colors duration-300">
+                <div className="flex flex-col gap-[100px]">
+                  <p>No data found. Please search for a location.</p>
+                </div>
+              </div>
             )}
             <TodaysForecast />
             <WeatherConditions />
           </div>
-          <div id="future-forecast-div">
+          <div id="future-forecast-div" className="sm:display-hidden">
             <FutureForecast />
           </div>
         </div>
