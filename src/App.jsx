@@ -56,6 +56,7 @@ function App() {
         `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,rain,weather_code,wind_speed_10m&hourly=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation_probability,precipitation,weather_code,cloud_cover,wind_speed_10m,uv_index,is_day&daily=weather_code,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset,daylight_duration,sunshine_duration,uv_index_max,precipitation_sum,rain_sum,precipitation_hours,precipitation_probability_max,wind_speed_10m_max&timezone=auto`
       );
       if (APIWeatherData) setWeatherData(APIWeatherData);
+      console.log(APIWeatherData);
     };
 
     fetchData();
@@ -105,10 +106,20 @@ function App() {
                 </div>
               </div>
             )}
-            <TodaysForecast />
-            <WeatherConditions />
+            <div
+              id="todays-forecast-div"
+              className="flex flex-col p-5 bg-sky-300 text-slate-100 dark:text-gray-200 dark:bg-slate-500 transition-colors duration-300 rounded w-[80%} mt-[50px] ml-[20px] gap-5 text-slate-700 dark:text-gray-200 transition-colors duration-300"
+            >
+              <TodaysForecast />
+            </div>
+            <div
+              id="todays-forecast-div"
+              className="flex flex-col p-5 bg-sky-300 text-slate-100 dark:text-gray-200 dark:bg-slate-500 transition-colors duration-300 rounded w-[80%} mt-[50px] ml-[20px] gap-5 text-slate-700 dark:text-gray-200 transition-colors duration-300"
+            >
+              <WeatherConditions />
+            </div>
           </div>
-          <div id="future-forecast-div" className="sm:display-hidden">
+          <div id="future-forecast-div" className="sm:display-hidden ">
             <FutureForecast />
           </div>
         </div>

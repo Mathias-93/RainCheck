@@ -9,10 +9,10 @@ export default function WeatherPanel(props) {
     <div className="sm:ml-[20px] md:ml-[20px] lg:ml-[50px] xl:mt-[50px] mt-[20px] flex gap-16 text-slate-700 dark:text-gray-200 transition-colors duration-300">
       <div className="flex flex-col gap-[100px]">
         <div className="flex flex-col gap-4">
-          <p className="text-2xl font-semibold">
+          <p className="text-4xl font-semibold">
             {location ? location : "No location available"}
           </p>
-          <p className="text-lg">
+          <p className="text-2xl">
             {temperature_2m ? temperature_2m : "No data available"}
             °C
           </p>
