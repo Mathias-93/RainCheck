@@ -97,15 +97,8 @@ function App() {
               handleInputChange={handleInputChange}
             />
 
-            {weatherData && weatherData.current ? (
-              <WeatherPanel location={location} weatherData={weatherData} />
-            ) : (
-              <div className="h-[200px] ml-[100px] mt-[20px] flex gap-16 text-slate-700 dark:text-gray-200 transition-colors duration-300">
-                <div className="flex flex-col gap-[100px]">
-                  <p>No data found. Please search for a location.</p>
-                </div>
-              </div>
-            )}
+            <WeatherPanel location={location} weatherData={weatherData} />
+
             <div
               id="todays-forecast-div"
               className="flex flex-col p-5 bg-sky-300 text-slate-100 dark:text-gray-200 dark:bg-slate-500 transition-colors duration-300 rounded w-[80%} mt-[50px] ml-[20px] gap-5 text-slate-700 dark:text-gray-200 transition-colors duration-300"
