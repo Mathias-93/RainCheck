@@ -50,10 +50,11 @@ function App() {
       }
 
       const { lat, lon } = data[0]; // Deconstruct latitude and longitude from location API data
-      /* https://api.open-meteo.com/v1/forecast?latitude=59.3294&longitude=18.0687&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,rain,weather_code,wind_speed_10m&hourly=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation_probability,precipitation,weather_code,cloud_cover,wind_speed_10m,uv_index,is_day&daily=weather_code,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset,daylight_duration,sunshine_duration,uv_index_max,precipitation_sum,rain_sum,precipitation_hours,precipitation_probability_max,wind_speed_10m_max&timezone=auto */
+      /* https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,rain,showers,snowfall,cloud_cover,wind_speed_10m,wind_direction_10m,wind_gusts_10m&hourly=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation_probability,precipitation,rain,snowfall,snow_depth,cloud_cover,wind_speed_10m,wind_direction_10m,wind_gusts_10m&daily=temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset,daylight_duration,sunshine_duration,uv_index_max,precipitation_sum,rain_sum,snowfall_sum,precipitation_hours,precipitation_probability_max,wind_speed_10m_max,wind_gusts_10m_max&wind_speed_unit=ms */
+
       const APIWeatherData = await fetchAPIdata(
         // Using the lat and lon from location to get current local weather
-        `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,rain,weather_code,wind_speed_10m&hourly=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation_probability,precipitation,weather_code,cloud_cover,wind_speed_10m,uv_index,is_day&daily=weather_code,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset,daylight_duration,sunshine_duration,uv_index_max,precipitation_sum,rain_sum,precipitation_hours,precipitation_probability_max,wind_speed_10m_max&timezone=auto`
+        `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,rain,showers,snowfall,cloud_cover,wind_speed_10m,wind_direction_10m,wind_gusts_10m&hourly=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation_probability,precipitation,rain,snowfall,snow_depth,cloud_cover,wind_speed_10m,wind_direction_10m,wind_gusts_10m&daily=temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset,daylight_duration,sunshine_duration,uv_index_max,precipitation_sum,rain_sum,snowfall_sum,precipitation_hours,precipitation_probability_max,wind_speed_10m_max,wind_gusts_10m_max&wind_speed_unit=ms`
       );
       if (APIWeatherData) setWeatherData(APIWeatherData);
       console.log(APIWeatherData);
@@ -90,10 +91,7 @@ function App() {
           <SideBar toggleDarkMode={toggleDarkMode} isDarkMode={isDarkMode} />
           <div id="middle-container" className="flex flex-col">
             <SearchBar
-              setLocation={setLocation}
               handleSubmit={handleSubmit}
-              setInputValue={setInputValue}
-              inputValue={inputValue}
               handleInputChange={handleInputChange}
             />
 
@@ -101,15 +99,15 @@ function App() {
 
             <div
               id="todays-forecast-div"
-              className="flex flex-col p-5 bg-sky-300 text-slate-100 dark:text-gray-200 dark:bg-slate-500 transition-colors duration-300 rounded w-[80%} mt-[50px] ml-[20px] gap-5 text-slate-700 dark:text-gray-200 transition-colors duration-300"
+              className="flex flex-col p-5 bg-sky-300 shadow-lg text-slate-100 dark:text-gray-200 dark:bg-slate-500 transition-colors duration-300 rounded w-[80%} mt-[50px] ml-[20px] gap-5 text-slate-700 dark:text-gray-200 transition-colors duration-300"
             >
               <TodaysForecast />
             </div>
             <div
               id="todays-forecast-div"
-              className="flex flex-col p-5 bg-sky-300 text-slate-100 dark:text-gray-200 dark:bg-slate-500 transition-colors duration-300 rounded w-[80%} mt-[50px] ml-[20px] gap-5 text-slate-700 dark:text-gray-200 transition-colors duration-300"
+              className="flex flex-col p-5 bg-sky-300 shadow-lg text-slate-100 dark:text-gray-200 dark:bg-slate-500 transition-colors duration-300 rounded w-[80%} mt-[50px] ml-[20px] gap-5 text-slate-700 dark:text-gray-200 transition-colors duration-300"
             >
-              <WeatherConditions />
+              <WeatherConditions weatherData={weatherData} />
             </div>
           </div>
           <div id="future-forecast-div" className="sm:display-hidden ">

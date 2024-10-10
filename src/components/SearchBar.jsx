@@ -1,13 +1,7 @@
 import React from "react";
 
 export default function SearchBar(props) {
-  const {
-    setLocation,
-    handleSubmit,
-    inputValue,
-    setInputValue,
-    handleInputChange,
-  } = props;
+  const { handleSubmit, handleInputChange } = props;
   return (
     <>
       <form className="flex gap-3" onSubmit={handleSubmit}>

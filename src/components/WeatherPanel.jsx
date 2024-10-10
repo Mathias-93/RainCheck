@@ -1,4 +1,5 @@
 import React from "react";
+import PrecipitationInfo from "./PrecipitationInfo";
 
 export default function WeatherPanel(props) {
   const { location, weatherData } = props;
@@ -19,13 +20,9 @@ export default function WeatherPanel(props) {
           </p>
         </div>
         <div className="flex flex-col gap-4">
-          <p>
-            Precipitation{" "}
-            {currentWeather?.precipitation !== undefined
-              ? `${currentWeather.precipitation}mm`
-              : "0mm"}
-          </p>
-          <p>
+          <PrecipitationInfo weatherData={weatherData} />
+
+          <p className="text-lg">
             Feels like{" "}
             {currentWeather?.apparent_temperature !== undefined
               ? currentWeather.apparent_temperature
