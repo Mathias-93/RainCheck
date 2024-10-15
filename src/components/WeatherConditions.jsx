@@ -47,8 +47,8 @@ export default function WeatherConditions(props) {
           </div>
           <p>
             {weatherData?.current?.rain
-              ? `${weatherData.current.relative_humidity_2m}mm`
-              : "No data found"}
+              ? `${weatherData.current.rain}mm`
+              : "No rain right now!"}
           </p>
         </div>
         <div>

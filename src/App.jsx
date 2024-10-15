@@ -78,6 +78,42 @@ function App() {
     setLocation(inputValue);
   };
 
+  const formatTime = (timeString) => {
+    const date = new Date(timeString);
+    const months = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+
+    const getDaySuffix = (day) => {
+      if (day >= 11 && day <= 13) return "th";
+      switch (day % 10) {
+        case 1:
+          return "st";
+        case 2:
+          return "nd";
+        case 3:
+          return "rd";
+        default:
+          return "th";
+      }
+    };
+
+    const [month, day] = [months[date.getMonth()], date.getDate()];
+    console.log(month, day);
+    return `${month} ${day}${getDaySuffix(day)}`;
+  };
+
   return (
     <>
       <div
@@ -86,7 +122,7 @@ function App() {
       >
         <div
           id="main-container"
-          className="p-4 w-[80%] dark:bg-slate-700 bg-sky-200 shadow-lg rounded-lg flex gap-5 my-5 transition-colors duration-300"
+          className="p-4 w-[80%] max-h-screen dark:bg-slate-700 bg-sky-200 shadow-lg rounded-lg flex gap-5 my-5 transition-colors duration-300"
         >
           <SideBar toggleDarkMode={toggleDarkMode} isDarkMode={isDarkMode} />
           <div id="middle-container" className="flex flex-col">
@@ -99,18 +135,24 @@ function App() {
 
             <div
               id="todays-forecast-div"
-              className="flex flex-col p-5 bg-sky-300 shadow-lg text-slate-100 dark:text-gray-200 dark:bg-slate-500 transition-colors duration-300 rounded w-[80%} mt-[50px] ml-[20px] gap-5 text-slate-700 dark:text-gray-200 transition-colors duration-300"
+              className="flex flex-col p-5 bg-sky-300 shadow-lg text-slate-100 dark:text-gray-200 dark:bg-slate-500 transition-colors duration-300 rounded w-[80%} max-h-full mt-[50px] ml-[20px] gap-5 text-slate-700 dark:text-gray-200 transition-colors duration-300"
             >
-              <TodaysForecast />
+              <TodaysForecast
+                weatherData={weatherData}
+                formatTime={formatTime}
+              />
             </div>
             <div
               id="todays-forecast-div"
-              className="flex flex-col p-5 bg-sky-300 shadow-lg text-slate-100 dark:text-gray-200 dark:bg-slate-500 transition-colors duration-300 rounded w-[80%} mt-[50px] ml-[20px] gap-5 text-slate-700 dark:text-gray-200 transition-colors duration-300"
+              className="flex flex-col p-5 bg-sky-300 shadow-lg text-slate-100 dark:text-gray-200 dark:bg-slate-500 transition-colors duration-300 rounded w-[80%} max-h-full mt-[50px] ml-[20px] gap-5 text-slate-700 dark:text-gray-200 transition-colors duration-300"
             >
               <WeatherConditions weatherData={weatherData} />
             </div>
           </div>
-          <div id="future-forecast-div" className="sm:display-hidden ">
+          <div
+            id="future-forecast-div"
+            className="flex flex-col p-5 bg-sky-300 shadow-lg text-slate-100 dark:text-gray-200 dark:bg-slate-500 transition-colors duration-300 rounded w-[80%} max-h-full ml-[20px] gap-5 text-slate-700 dark:text-gray-200 transition-colors duration-300"
+          >
             <FutureForecast />
           </div>
         </div>
