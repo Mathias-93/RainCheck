@@ -2,7 +2,7 @@ import React from "react";
 import PrecipitationInfo from "./PrecipitationInfo";
 
 export default function WeatherPanel(props) {
-  const { location, weatherData } = props;
+  const { location, weatherData, handleDisplayWeatherImage } = props;
 
   const currentWeather = weatherData?.current;
 
@@ -31,13 +31,15 @@ export default function WeatherPanel(props) {
           </p>
         </div>
       </div>
-      <div className="ml-[150px] sm:ml-[20px] xl:ml-[150px] mt-[50px]">
-        {currentWeather?.is_day === 1 ? (
-          <i className="fa-solid fa-sun text-yellow-400 text-9xl"></i>
-        ) : (
-          <i className="fa-solid fa-moon text-slate-200 text-9xl"></i>
-        )}
+      <div className="ml-[150px] sm:ml-[20px] xl:ml-[150px]">
+        {handleDisplayWeatherImage(weatherData)}
       </div>
     </div>
   );
 }
+
+/* {currentWeather?.is_day === 1 ? (
+  <i className="fa-solid fa-sun text-yellow-400 text-9xl"></i>
+) : (
+  
+)} */
