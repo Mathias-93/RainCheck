@@ -23,11 +23,9 @@ export default function WeatherPanel(props) {
           <PrecipitationInfo weatherData={weatherData} />
 
           <p className="text-lg">
-            Feels like{" "}
             {currentWeather?.apparent_temperature !== undefined
-              ? currentWeather.apparent_temperature
+              ? `Feels like ${currentWeather.apparent_temperature}°C`
               : "No data available"}
-            °C
           </p>
         </div>
       </div>
