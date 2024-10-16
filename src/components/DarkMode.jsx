@@ -5,7 +5,7 @@ export default function DarkMode(props) {
 
   return (
     <div className="flex flex-col items-center gap-2">
-      <span className="mr-2 text-sm dark:text-gray-100 text-white">
+      <span className="mr-2 text-sm dark:text-gray-100 text-slate-700">
         {isDarkMode ? "Toggle Light Mode" : "Toggle Dark Mode"}
       </span>
       <div

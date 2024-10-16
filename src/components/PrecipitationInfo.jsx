@@ -4,7 +4,9 @@ export default function PrecipitationInfo(props) {
   const { weatherData } = props;
 
   const precipitationAmount = parseFloat(weatherData?.current?.precipitation);
-  const rainAmount = parseFloat(weatherData?.current?.rain);
+  const rainAmount = parseFloat(
+    weatherData?.current?.rain || weatherData?.current?.showers
+  );
   const snowAmount = parseFloat(weatherData?.current?.snowfall);
 
   let precipitationType;
