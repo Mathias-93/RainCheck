@@ -7,6 +7,7 @@ export default function PrecipitationInfo(props) {
   const rainAmount = parseFloat(
     weatherData?.current?.rain || weatherData?.current?.showers
   );
+  const showers = parseFloat(weatherData?.current?.showers);
   const snowAmount = parseFloat(weatherData?.current?.snowfall);
 
   let precipitationType;
@@ -16,7 +17,7 @@ export default function PrecipitationInfo(props) {
     precipitationType = "rain";
     icon = <i className="fa-solid fa-cloud-rain"></i>;
   } else if (snowAmount > 0) {
-    precipitationType = "Snow";
+    precipitationType = "snow";
     icon = <i className="fa-regular fa-snowflake"></i>;
   } else {
     precipitationType = "No precipitation";
@@ -24,11 +25,16 @@ export default function PrecipitationInfo(props) {
   }
 
   return (
-    <p className="flex items-center gap-2 text-lg">
-      {precipitationAmount > 0
-        ? `${precipitationAmount}mm ${precipitationType}`
-        : "No precipitation"}
-      {icon}
-    </p>
+    <>
+      <p className="flex items-center gap-2 text-lg">
+        {showers ? "Chance of showers" : null}
+      </p>
+      <p className="flex items-center gap-2 text-lg">
+        {precipitationAmount > 0
+          ? `${precipitationAmount}mm ${precipitationType}`
+          : "No precipitation"}
+        {icon}
+      </p>
+    </>
   );
 }
