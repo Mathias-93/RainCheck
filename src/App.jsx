@@ -165,7 +165,7 @@ function App() {
       );
     }
 
-    if (currentWeather?.snowfall === 0) {
+    if (currentWeather?.snowfall > 0) {
       return <img src={Snow} alt="clouds and moon" className="h-[225px]" />;
     }
     return (
@@ -181,7 +181,7 @@ function App() {
       >
         <div
           id="main-container"
-          className="p-4 w-[80%] max-h-screen dark:bg-slate-700 bg-sky-200 shadow-lg rounded-lg flex gap-5 my-5 transition-colors duration-300"
+          className="p-4 w-[80%] max-h-screen dark:bg-slate-700 bg-sky-100 shadow-lg rounded-lg flex gap-5 my-5 transition-colors duration-300"
         >
           <SideBar toggleDarkMode={toggleDarkMode} isDarkMode={isDarkMode} />
           <div id="middle-container" className="flex flex-col">
@@ -198,7 +198,7 @@ function App() {
 
             <div
               id="todays-forecast-div"
-              className="flex flex-col p-5 bg-sky-300 shadow-lg text-slate-100 dark:text-gray-200 dark:bg-slate-500 transition-colors duration-300 rounded w-[80%} max-h-full mt-[50px] ml-[20px] gap-5 text-slate-700 dark:text-gray-200 transition-colors duration-300"
+              className="flex flex-col p-5 bg-sky-200 shadow-lg text-slate-100 dark:text-gray-200 dark:bg-slate-500 transition-colors duration-300 rounded w-[80%} max-h-full mt-[50px] ml-[20px] gap-5 text-slate-700 dark:text-gray-200 transition-colors duration-300"
             >
               <TodaysForecast
                 weatherData={weatherData}
@@ -207,14 +207,14 @@ function App() {
             </div>
             <div
               id="todays-forecast-div"
-              className="flex flex-col p-5 bg-sky-300 shadow-lg text-slate-100 dark:text-gray-200 dark:bg-slate-500 transition-colors duration-300 rounded w-[80%} max-h-full mt-[50px] ml-[20px] gap-5 text-slate-700 dark:text-gray-200 transition-colors duration-300"
+              className="flex flex-col p-5 bg-sky-200 shadow-lg text-slate-100 dark:text-gray-200 dark:bg-slate-500 transition-colors duration-300 rounded w-[80%} max-h-full mt-[50px] ml-[20px] gap-5 text-slate-700 dark:text-gray-200 transition-colors duration-300"
             >
               <WeatherConditions weatherData={weatherData} />
             </div>
           </div>
           <div
             id="future-forecast-div"
-            className="flex flex-col p-5 bg-sky-300 shadow-lg text-slate-100 dark:text-gray-200 dark:bg-slate-500 transition-colors duration-300 rounded w-[80%} max-h-full ml-[20px] gap-5 text-slate-700 dark:text-gray-200 transition-colors duration-300"
+            className="flex flex-col p-5 bg-sky-200 shadow-lg text-slate-100 dark:text-gray-200 dark:bg-slate-500 transition-colors duration-300 rounded w-[80%} max-h-full ml-[20px] gap-5 text-slate-700 dark:text-gray-200 transition-colors duration-300"
           >
             <FutureForecast />
           </div>
