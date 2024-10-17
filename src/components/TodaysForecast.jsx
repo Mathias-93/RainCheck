@@ -5,8 +5,10 @@ export default function TodaysForecast(props) {
 
   const formatDailyData = () => {
     const maxHours = 24;
+    const currentTime = new Date();
+    const minHours = currentTime.getHours();
     const formattedTime = weatherData?.hourly?.time
-      .slice(0, maxHours)
+      .slice(minHours, maxHours)
       .map((time, index) => ({
         hour: new Date(time).toLocaleTimeString([], {
           hour: "2-digit",
