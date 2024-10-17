@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import "./index.css";
 import SideBar from "./components/SideBar";
 import SearchBar from "./components/SearchBar";
 import WeatherPanel from "./components/WeatherPanel";
@@ -84,7 +85,7 @@ function App() {
     setLocation(inputValue);
   };
 
-  const formatTime = (timeString) => {
+  const formatDate = (timeString) => {
     const date = new Date(timeString);
     const months = [
       "January",
@@ -181,10 +182,13 @@ function App() {
       >
         <div
           id="main-container"
-          className="p-4 w-[80%] max-h-screen dark:bg-slate-700 bg-sky-100 shadow-lg rounded-lg flex gap-5 my-5 transition-colors duration-300"
+          className="p-4 w-[80%] h-full dark:bg-slate-700 bg-sky-100 shadow-lg rounded-lg flex gap-5 my-5 transition-colors duration-300"
         >
           <SideBar toggleDarkMode={toggleDarkMode} isDarkMode={isDarkMode} />
-          <div id="middle-container" className="flex flex-col">
+          <div
+            id="middle-container"
+            className="flex flex-col flex-grow-1 w-[65%]"
+          >
             <SearchBar
               handleSubmit={handleSubmit}
               handleInputChange={handleInputChange}
@@ -198,23 +202,23 @@ function App() {
 
             <div
               id="todays-forecast-div"
-              className="flex flex-col p-5 bg-sky-200 shadow-lg text-slate-100 dark:text-gray-200 dark:bg-slate-500 transition-colors duration-300 rounded w-[80%} max-h-full mt-[50px] ml-[20px] gap-5 text-slate-700 dark:text-gray-200 transition-colors duration-300"
+              className="flex flex-col flex-grow-1 p-5 h-full bg-sky-200 shadow-lg dark:text-gray-200 dark:bg-slate-500 rounded w-[80%] mt-[50px] ml-[20px] gap-5 text-slate-700 transition-colors duration-300 overflow-y-hidden"
             >
               <TodaysForecast
                 weatherData={weatherData}
-                formatTime={formatTime}
+                formatDate={formatDate}
               />
             </div>
             <div
-              id="todays-forecast-div"
-              className="flex flex-col p-5 bg-sky-200 shadow-lg text-slate-100 dark:text-gray-200 dark:bg-slate-500 transition-colors duration-300 rounded w-[80%} max-h-full mt-[50px] ml-[20px] gap-5 text-slate-700 dark:text-gray-200 transition-colors duration-300"
+              id="weather-conditions-div"
+              className="flex flex-col p-5 bg-sky-200 shadow-lg dark:text-gray-200 dark:bg-slate-500 rounded w-[80%] max-h-full mt-[50px] ml-[20px] gap-5 text-slate-700 transition-colors duration-300"
             >
               <WeatherConditions weatherData={weatherData} />
             </div>
           </div>
           <div
             id="future-forecast-div"
-            className="flex flex-col p-5 bg-sky-200 shadow-lg text-slate-100 dark:text-gray-200 dark:bg-slate-500 transition-colors duration-300 rounded w-[80%} max-h-full ml-[20px] gap-5 text-slate-700 dark:text-gray-200 transition-colors duration-300"
+            className="flex flex-col p-5 bg-sky-200 shadow-lg dark:text-gray-200 dark:bg-slate-500 rounded w-[80%] max-h-full ml-[20px] gap-5 text-slate-700 transition-colors duration-300"
           >
             <FutureForecast />
           </div>

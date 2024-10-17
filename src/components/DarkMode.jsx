@@ -5,12 +5,9 @@ export default function DarkMode(props) {
 
   return (
     <div className="flex flex-col items-center gap-2">
-      <span className="mr-2 text-sm dark:text-gray-100 text-slate-700">
-        {isDarkMode ? "Toggle Light Mode" : "Toggle Dark Mode"}
-      </span>
       <div
         onClick={toggleDarkMode}
-        className={`w-14 h-8 flex items-center bg-sky-100 dark:bg-slate-600 rounded-full p-1 cursor-pointer transition-colors duration-300 ${
+        className={`w-14 h-8 flex items-center mt-3 bg-sky-100 dark:bg-slate-600 rounded-full p-1 cursor-pointer transition-colors duration-300 ${
           isDarkMode ? "bg-blue-600" : "bg-gray-300"
         }`}
       >
