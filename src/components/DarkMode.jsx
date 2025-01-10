@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
+import { GlobalContext } from "../Context";
 
-export default function DarkMode(props) {
-  const { isDarkMode, toggleDarkMode } = props;
+export default function DarkMode() {
+  const { isDarkMode, toggleDarkMode } = useContext(GlobalContext);
 
   return (
     <div className="flex flex-col items-center gap-2">

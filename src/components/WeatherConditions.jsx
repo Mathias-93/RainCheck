@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
+import { GlobalContext } from "../Context";
 
-export default function WeatherConditions(props) {
-  const { weatherData } = props;
+export default function WeatherConditions() {
+  const { weatherData } = useContext(GlobalContext);
 
   const windDirection = (degrees) => {
     const directions = ["N", "NE", "E", "SE", "S", "SW", "W", "NW", "N"]; // Array of directions

@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import DarkMode from "./DarkMode";
+import { GlobalContext } from "../Context";
 
-export default function SideBar(props) {
-  const { toggleDarkMode, isDarkMode } = props;
+export default function SideBar() {
+  const { toggleDarkMode, isDarkMode } = useContext(GlobalContext);
 
   return (
     <div

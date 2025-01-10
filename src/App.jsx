@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import "./index.css";
 import SideBar from "./components/SideBar";
 import SearchBar from "./components/SearchBar";
@@ -6,26 +6,52 @@ import WeatherPanel from "./components/WeatherPanel";
 import TodaysForecast from "./components/TodaysForecast";
 import WeatherConditions from "./components/WeatherConditions";
 import FutureForecast from "./components/FutureForecast";
-import sunAndCloud from "./assets/images/sunAndCloud.png";
-import Sun from "./assets/images/Sun.png";
-import Clouds from "./assets/images/Clouds.png";
-import Moon from "./assets/images/moon-phase.png";
-import cloudyNight from "./assets/images/cloudy-night.png";
-import Snow from "./assets/images/snow.png";
+import { GlobalContext } from "./Context";
 
 function App() {
-  const [location, setLocation] = useState("");
-  const [isDarkMode, setIsDarkMode] = useState(false);
-  const [data, setData] = useState([]);
-  const [weatherData, setWeatherData] = useState({});
-  const [inputValue, setInputValue] = useState("");
+  const { location, setLocation, setData, setWeatherData, setIsDarkMode } =
+    useContext(GlobalContext);
+
+  const formatDate = (timeString) => {
+    const date = new Date(timeString);
+    const months = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+
+    const getDaySuffix = (day) => {
+      if (day >= 11 && day <= 13) return "th";
+      switch (day % 10) {
+        case 1:
+          return "st";
+        case 2:
+          return "nd";
+        case 3:
+          return "rd";
+        default:
+          return "th";
+      }
+    };
+
+    const [month, day] = [months[date.getMonth()], date.getDate()];
+    return `Forecast ${month} ${day}${getDaySuffix(day)}`;
+  };
 
   // Generic API fecthing function
   const fetchAPIdata = async (url) => {
     try {
       const res = await fetch(url);
       const data = await res.json();
-      console.log(data);
       return data;
     } catch (err) {
       console.log(err.message);
@@ -70,110 +96,6 @@ function App() {
     fetchData();
   }, [location]);
 
-  const toggleDarkMode = () => {
-    setIsDarkMode((prevMode) => !prevMode);
-    document.documentElement.classList.toggle("dark");
-    localStorage.setItem("theme", !isDarkMode ? "dark" : "light");
-  };
-
-  const handleInputChange = (e) => {
-    setInputValue(e.target.value);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setLocation(inputValue);
-  };
-
-  const formatDate = (timeString) => {
-    const date = new Date(timeString);
-    const months = [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December",
-    ];
-
-    const getDaySuffix = (day) => {
-      if (day >= 11 && day <= 13) return "th";
-      switch (day % 10) {
-        case 1:
-          return "st";
-        case 2:
-          return "nd";
-        case 3:
-          return "rd";
-        default:
-          return "th";
-      }
-    };
-
-    const [month, day] = [months[date.getMonth()], date.getDate()];
-    return `Forecast ${month} ${day}${getDaySuffix(day)}`;
-  };
-
-  // Displays different images on the front page depending on weather conditions
-  const handleDisplayWeatherImage = (weatherData) => {
-    const currentWeather = weatherData?.current;
-
-    if (!currentWeather) return null;
-
-    if (!currentWeather?.is_day) {
-      return <img src={Moon} alt="moon" className="h-[225px]" />;
-    }
-
-    if (
-      currentWeather?.cloud_cover <= 50 &&
-      currentWeather?.cloud_cover >= 25 &&
-      currentWeather?.is_day
-    ) {
-      return (
-        <img src={sunAndCloud} alt="sun and cloud icon" className="h-[225px]" />
-      );
-    }
-
-    if (
-      currentWeather?.cloud_cover < 25 &&
-      currentWeather?.is_day &&
-      currentWeather?.precipitation === 0
-    ) {
-      return <img src={Sun} alt="sun" className="h-[225px]" />;
-    }
-
-    if (
-      currentWeather?.cloud_cover > 50 &&
-      currentWeather?.is_day &&
-      currentWeather?.precipitation === 0
-    ) {
-      return <img src={Clouds} alt="clouds" className="h-[225px]" />;
-    }
-
-    if (
-      currentWeather?.cloud_cover > 50 &&
-      !currentWeather?.is_day &&
-      currentWeather?.precipitation === 0
-    ) {
-      return (
-        <img src={cloudyNight} alt="clouds and moon" className="h-[225px]" />
-      );
-    }
-
-    if (currentWeather?.snowfall > 0) {
-      return <img src={Snow} alt="clouds and moon" className="h-[225px]" />;
-    }
-    return (
-      <img src={sunAndCloud} alt="sun and cloud icon" className="h-[225px]" />
-    );
-  };
-
   return (
     <>
       <div
@@ -184,36 +106,26 @@ function App() {
           id="main-container"
           className="p-4 w-[80%] h-full dark:bg-slate-700 bg-sky-100 shadow-lg rounded-lg flex gap-5 my-5 transition-colors duration-300"
         >
-          <SideBar toggleDarkMode={toggleDarkMode} isDarkMode={isDarkMode} />
+          <SideBar />
           <div
             id="middle-container"
             className="flex flex-col flex-grow-1 w-[65%]"
           >
-            <SearchBar
-              handleSubmit={handleSubmit}
-              handleInputChange={handleInputChange}
-            />
+            <SearchBar />
 
-            <WeatherPanel
-              location={location}
-              weatherData={weatherData}
-              handleDisplayWeatherImage={handleDisplayWeatherImage}
-            />
+            <WeatherPanel />
 
             <div
               id="todays-forecast-div"
-              className="flex flex-col flex-grow-1 p-5 h-full bg-sky-200 shadow-lg dark:text-gray-200 dark:bg-slate-500 rounded w-[80%] mt-[50px] ml-[20px] gap-5 text-slate-700 transition-colors duration-300 overflow-y-hidden"
+              className="flex flex-col flex-grow-1 p-5 bg-sky-200 shadow-lg dark:text-gray-200 dark:bg-slate-500 rounded w-[80%] mt-[50px] ml-[20px] gap-5 text-slate-700 transition-colors duration-300 overflow-y-hidden"
             >
-              <TodaysForecast
-                weatherData={weatherData}
-                formatDate={formatDate}
-              />
+              <TodaysForecast formatDate={formatDate} />
             </div>
             <div
               id="weather-conditions-div"
               className="flex flex-col p-5 bg-sky-200 shadow-lg dark:text-gray-200 dark:bg-slate-500 rounded w-[80%] max-h-full mt-[50px] ml-[20px] gap-5 text-slate-700 transition-colors duration-300"
             >
-              <WeatherConditions weatherData={weatherData} />
+              <WeatherConditions />
             </div>
           </div>
           <div

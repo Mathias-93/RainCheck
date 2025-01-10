@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import PrecipitationInfo from "./PrecipitationInfo";
+import { GlobalContext } from "../Context";
 
-export default function WeatherPanel(props) {
-  const { location, weatherData, handleDisplayWeatherImage } = props;
+export default function WeatherPanel() {
+  const { location, weatherData, handleDisplayWeatherImage } =
+    useContext(GlobalContext);
 
   const currentWeather = weatherData?.current;
 

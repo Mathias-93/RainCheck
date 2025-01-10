@@ -1,7 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
+import { GlobalContext } from "../Context";
 
-export default function SearchBar(props) {
-  const { handleSubmit, handleInputChange } = props;
+export default function SearchBar() {
+  const { setInputValue, inputValue, setLocation } = useContext(GlobalContext);
+
+  const handleInputChange = (e) => {
+    setInputValue(e.target.value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setLocation(inputValue);
+  };
   return (
     <>
       <form className="flex gap-3" onSubmit={handleSubmit}>
