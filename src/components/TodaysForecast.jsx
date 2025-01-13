@@ -3,7 +3,7 @@ import { GlobalContext } from "../Context";
 
 export default function TodaysForecast(props) {
   const { formatDate } = props;
-  const { weatherData } = useContext(GlobalContext);
+  const { weatherData, handleDisplayWeatherImage } = useContext(GlobalContext);
   const scrollRef = useRef(null); // useRef let's you hold a reference to a DOM element or a mutable value across renders, without causing re-renders when updated
 
   const scrollLeft = () => {
@@ -36,17 +36,17 @@ export default function TodaysForecast(props) {
       }));
 
     return (
-      <>
+      <div className="flex">
         {formattedTime?.map((item, index) => {
           return (
-            <div key={index} className="flex flex-col w-[125px] flex-shrink-0">
-              <p>{`Time: ${item.hour}`}</p>
-              <p>ICON</p>
-              <p>{`Temp: ${item.temp}°C`}</p>
+            <div key={index} className="flex flex-col w-[90px] gap-2">
+              <p className="w-[20px]">{`${item.hour}`}</p>
+              <div>{handleDisplayWeatherImage(weatherData, "h-[30px]")}</div>
+              <p>{`${item.temp}°`}</p>
             </div>
           );
         })}
-      </>
+      </div>
     );
   };
 
@@ -66,7 +66,7 @@ export default function TodaysForecast(props) {
         </button>
         <div
           ref={scrollRef}
-          className="flex gap-5 pb-2 p-1 overflow-x-auto overflow-y-hidden scrollbar-none"
+          className="flex gap-1 pb-2 p-1 overflow-x-auto overflow-y-hidden scrollbar-none"
         >
           {formatDailyData()}
         </div>

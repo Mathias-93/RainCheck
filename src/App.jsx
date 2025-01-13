@@ -107,10 +107,7 @@ function App() {
           className="p-4 w-[80%] h-full dark:bg-slate-700 bg-sky-100 shadow-lg rounded-lg flex gap-5 my-5 transition-colors duration-300"
         >
           <SideBar />
-          <div
-            id="middle-container"
-            className="flex flex-col flex-grow-1 w-[65%]"
-          >
+          <div id="middle-container" className="flex flex-col w-[65%]">
             <SearchBar />
 
             <WeatherPanel />

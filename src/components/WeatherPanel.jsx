@@ -32,7 +32,7 @@ export default function WeatherPanel() {
         </div>
       </div>
       <div className="ml-[150px] sm:ml-[20px] xl:ml-[150px]">
-        {handleDisplayWeatherImage(weatherData)}
+        {handleDisplayWeatherImage(weatherData, "h-[225px]")}
       </div>
     </div>
   );
