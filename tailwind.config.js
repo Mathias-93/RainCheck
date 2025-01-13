@@ -7,7 +7,15 @@ export default {
       fontFamily: {
         inter: ["inter", "sans-serif"],
       },
+      scrollbar: {
+        rounded: true,
+      },
     },
   },
-  plugins: [],
+  plugins: [require("tailwind-scrollbar")],
+  variants: {
+    extend: {
+      scrollbar: ["hover", "rounded", "dark"],
+    },
+  },
 };

@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useEffect, useContext } from "react";
 import "./index.css";
 import SideBar from "./components/SideBar";
 import SearchBar from "./components/SearchBar";
@@ -117,13 +117,13 @@ function App() {
 
             <div
               id="todays-forecast-div"
-              className="flex flex-col flex-grow-1 p-5 bg-sky-200 shadow-lg dark:text-gray-200 dark:bg-slate-500 rounded w-[80%] mt-[50px] ml-[20px] gap-5 text-slate-700 transition-colors duration-300 overflow-y-hidden"
+              className="flex flex-col flex-grow-1 p-4 bg-sky-200 shadow-lg dark:text-gray-200 dark:bg-slate-500 rounded w-[80%] mt-[50px] ml-[20px] gap-5 text-slate-700 transition-colors duration-300 overflow-y-hidden"
             >
               <TodaysForecast formatDate={formatDate} />
             </div>
             <div
               id="weather-conditions-div"
-              className="flex flex-col p-5 bg-sky-200 shadow-lg dark:text-gray-200 dark:bg-slate-500 rounded w-[80%] max-h-full mt-[50px] ml-[20px] gap-5 text-slate-700 transition-colors duration-300"
+              className="flex flex-col p-5 bg-sky-200 shadow-lg dark:text-gray-200 dark:bg-slate-500 rounded w-[80%] max-h-full mt-[50px] ml-[20px] gap-5 text-slate-700 transition-colors duration-300 "
             >
               <WeatherConditions />
             </div>

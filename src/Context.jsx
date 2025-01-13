@@ -1,11 +1,5 @@
 import { createContext } from "react";
 import { useState } from "react";
-import SideBar from "./components/SideBar";
-import SearchBar from "./components/SearchBar";
-import WeatherPanel from "./components/WeatherPanel";
-import TodaysForecast from "./components/TodaysForecast";
-import WeatherConditions from "./components/WeatherConditions";
-import FutureForecast from "./components/FutureForecast";
 import sunAndCloud from "./assets/images/sunAndCloud.png";
 import Sun from "./assets/images/Sun.png";
 import Clouds from "./assets/images/Clouds.png";
@@ -16,7 +10,7 @@ import Snow from "./assets/images/snow.png";
 export const GlobalContext = createContext(null);
 
 export default function GlobalState({ children }) {
-  const [location, setLocation] = useState("");
+  const [location, setLocation] = useState("London");
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [data, setData] = useState([]);
   const [weatherData, setWeatherData] = useState({});
