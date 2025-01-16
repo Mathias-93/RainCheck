@@ -21,7 +21,7 @@ export default function TodaysForecast(props) {
   };
 
   const formatDailyData = () => {
-    const maxHours = 24;
+    const maxHours = 34;
     const currentTime = new Date();
     const minHours = currentTime.getHours() + 1;
     const formattedTime = weatherData?.hourly?.time
@@ -57,25 +57,29 @@ export default function TodaysForecast(props) {
           Hourly {formatDate(weatherData?.current?.time)}
         </h3>
       </div>
-      <div className="flex gap-2">
-        <button
-          onClick={scrollLeft}
-          className="w-[15%] rounded-md bg-sky-300 hover:bg-opacity-75 dark:bg-slate-700 dark:hover:bg-slate-600"
-        >
-          <i className="fa-solid fa-caret-left text-3xl text-gray-600 dark:text-slate-300" />
-        </button>
+      <div className="flex justify-between gap-2">
+        <div className="min-w-[25px] flex justify-center rounded-md bg-sky-300 hover:bg-opacity-75 dark:bg-slate-700 dark:hover:bg-slate-600">
+          <button
+            onClick={scrollLeft}
+            className="w-full rounded-md bg-sky-300 hover:bg-opacity-75 dark:bg-slate-700 dark:hover:bg-slate-600"
+          >
+            <i className="fa-solid fa-caret-left text-3xl text-gray-600 dark:text-slate-300" />
+          </button>
+        </div>
         <div
           ref={scrollRef}
           className="flex gap-1 pb-2 p-1 overflow-x-auto overflow-y-hidden scrollbar-none"
         >
           {formatDailyData()}
         </div>
-        <button
-          onClick={scrollRight}
-          className="w-[15%] rounded-md bg-sky-300 hover:bg-opacity-75 dark:bg-slate-700 dark:hover:bg-slate-600"
-        >
-          <i className="fa-solid fa-caret-right text-3xl text-gray-600 dark:text-slate-300 " />
-        </button>
+        <div className="min-w-[25px] flex justify-center rounded-md bg-sky-300 hover:bg-opacity-75 dark:bg-slate-700 dark:hover:bg-slate-600">
+          <button
+            onClick={scrollRight}
+            className="w-full rounded-md bg-sky-300 hover:bg-opacity-75 dark:bg-slate-700 dark:hover:bg-slate-600"
+          >
+            <i className="fa-solid fa-caret-right text-3xl text-gray-600 dark:text-slate-300 " />
+          </button>
+        </div>
       </div>
     </div>
   );

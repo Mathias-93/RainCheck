@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
-import PrecipitationInfo from "./PrecipitationInfo";
 import { GlobalContext } from "../Context";
+import WeatherCode from "./WeatherCode";
 
 export default function WeatherPanel() {
   const { location, weatherData, handleDisplayWeatherImage } =
@@ -22,8 +22,7 @@ export default function WeatherPanel() {
           </p>
         </div>
         <div className="flex flex-col gap-4">
-          <PrecipitationInfo weatherData={weatherData} />
-
+          <WeatherCode currentWeatherCode={currentWeather?.weather_code} />
           <p className="text-lg">
             {currentWeather?.apparent_temperature !== undefined
               ? `Feels like ${currentWeather.apparent_temperature}°C`
