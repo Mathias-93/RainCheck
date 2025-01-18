@@ -3,7 +3,7 @@ import { GlobalContext } from "../Context";
 import WeatherCode from "./WeatherCode";
 
 export default function WeatherPanel() {
-  const { location, weatherData, handleDisplayWeatherImage } =
+  const { location, weatherData, handleDisplayWeatherImage, loading } =
     useContext(GlobalContext);
 
   const currentWeather = weatherData?.current;
@@ -12,9 +12,13 @@ export default function WeatherPanel() {
     <div className="flex justify-between mr-40 p-6 text-slate-700 dark:text-gray-200 transition-colors duration-300">
       <div className="flex flex-col gap-[100px]">
         <div className="flex flex-col gap-4">
-          <p className="text-4xl font-semibold">
-            {location ? location : "Please search for a location."}
-          </p>
+          {loading ? (
+            <p className="text-4xl font-semibold">Loading...</p>
+          ) : (
+            <p className="text-4xl font-semibold">
+              {location ? location : "Please search for a location."}
+            </p>
+          )}
           <p className="text-2xl">
             {currentWeather?.temperature_2m !== undefined
               ? `${weatherData.current.temperature_2m} °C`

@@ -16,6 +16,8 @@ function App() {
     setWeatherData,
     weatherData,
     setIsDarkMode,
+    loading,
+    setLoading,
   } = useContext(GlobalContext);
 
   const formatDate = (timeString) => {
@@ -56,11 +58,14 @@ function App() {
   // Generic API fetching function
   const fetchAPIdata = async (url) => {
     try {
+      setLoading(true);
       const res = await fetch(url);
       const data = await res.json();
       return data;
     } catch (err) {
       console.log(err.message);
+    } finally {
+      setLoading(false);
     }
   };
 

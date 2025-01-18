@@ -18,6 +18,7 @@ export default function GlobalState({ children }) {
   const [data, setData] = useState([]);
   const [weatherData, setWeatherData] = useState(null);
   const [inputValue, setInputValue] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const toggleDarkMode = () => {
     setIsDarkMode((prevMode) => !prevMode);
@@ -81,6 +82,8 @@ export default function GlobalState({ children }) {
         setInputValue,
         toggleDarkMode,
         handleDisplayWeatherImage,
+        loading,
+        setLoading,
       }}
     >
       {children}
