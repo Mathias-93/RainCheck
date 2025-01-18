@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { GlobalContext } from "../Context";
+import "../index.css";
 
 export default function WeatherConditions() {
   const { weatherData } = useContext(GlobalContext);
@@ -18,74 +19,99 @@ export default function WeatherConditions() {
       <div className="flex flex-col text-center">
         <h3 className="text-lg font-semibold">Weather Conditions</h3>
       </div>
-      <div className="flex gap-8">
-        <div>
-          <div className="flex gap-2 items-center ">
-            <h3 className="text-lg font-semibold">Windspeed</h3>
-            <i className="fa-solid fa-wind"></i>
+
+      <div className="grid grid-cols-2 gap-8 p-4">
+        <div
+          id="precipitation-container"
+          className="flex items-center justify-center w-[350px] h-[200px] bg-sky-200 rounded-2xl "
+        >
+          {/* Current precipitation, precipitation probability */}
+          {}
+        </div>
+        <div
+          id="wind-container"
+          className="flex flex-col p-4 items-center justify-center w-[350px] h-[200px] bg-sky-200 rounded-2xl "
+        >
+          <div className="flex gap-2 w-full h-[20%]">
+            <h3 className="text-2xl font-semibold flex items-center">Wind</h3>
+            <i className="fa-solid fa-wind flex items-center text-2xl"></i>
           </div>
-          <p>
-            {weatherData?.current?.wind_speed_10m
-              ? `${weatherData.current.wind_speed_10m} m/s`
-              : "No data found"}
-          </p>
-        </div>
-        <div>
-          <div className="flex gap-2 items-center ">
-            <h3 className="text-lg font-semibold">Relative Humidity</h3>
-            <i className="fa-solid fa-droplet"></i>
+
+          <div className="flex flex-col justify-between w-full h-full">
+            <h1 className="text-5xl font-semibold p-3">8 m/s</h1>
+            <h3 className="text-lg font-semibold p-3">
+              {weatherData?.current?.wind_direction_10m
+                ? `From ${windDirection(
+                    parseInt(weatherData.current.wind_direction_10m)
+                  )}`
+                : "No data found"}
+            </h3>
           </div>
-          <p>
-            {weatherData?.current?.relative_humidity_2m
-              ? `${weatherData.current.relative_humidity_2m}%`
-              : "No data found"}
-          </p>
         </div>
-        <div>
-          <div className="flex gap-2 items-center ">
-            <h3 className="text-lg font-semibold">Rainfall</h3>
-            <i className="fa-solid fa-cloud-showers-heavy"></i>
+
+        <div
+          id="sunrise-sunset-container"
+          className="flex items-center justify-center w-[350px] h-[200px] bg-sky-200 rounded-2xl "
+        >
+          {/* Sunrise and sunset times for today */}asd
+        </div>
+
+        <div
+          id="uv-index-container"
+          className="flex items-center justify-center w-[350px] h-[200px] bg-sky-200 rounded-2xl "
+        >
+          {/* Current UV index by number and whether it's high or low */}asd
+        </div>
+
+        {/*  */}
+        {/*  */}
+        {/*  */}
+        {/*  */}
+        {/*  */}
+        {/*  */}
+        {/*  */}
+
+        <div
+          id="humidity-container"
+          className="relative flex flex-col items-center gap-2 p-3 w-[350px] h-[200px] bg-sky-200 rounded-2xl overflow-hidden"
+        >
+          <div
+            className="absolute bottom-0 left-0 w-full bg-sky-300 transition-all duration-500 opacity-60 wavy-top"
+            style={{
+              height: `${weatherData?.current?.relative_humidity_2m || 0}%`,
+            }}
+          ></div>
+
+          {/* Text stays above the waves */}
+          <div className="z-10 flex gap-2 w-full h-[20%] p-3">
+            <h3 className="text-2xl font-semibold flex items-center">
+              Relative Humidity
+            </h3>
+            <i className="fa-solid fa-droplet flex items-center text-2xl"></i>
           </div>
-          <p>
-            {weatherData?.current?.rain
-              ? `${weatherData.current.rain}mm`
-              : "No rain right now!"}
-          </p>
-        </div>
-        <div>
-          <p>Time</p>
-          <p>Icon rep weather</p>
-          <p>Temp</p>
-        </div>
-      </div>
-      <div className="flex gap-8">
-        <div>
-          <div className="flex gap-2 items-center ">
-            <h3 className="text-lg font-semibold">Wind Direction</h3>
-            <i className="fa-solid fa-wind"></i>
+
+          <div className="z-10 flex w-full h-full p-3 ml-5">
+            <h3 className="text-5xl font-semibold">
+              {weatherData?.current?.relative_humidity_2m
+                ? `${weatherData.current.relative_humidity_2m}%`
+                : "No data found"}
+            </h3>
           </div>
-          <p>
-            {weatherData?.current?.wind_direction_10m
-              ? `${windDirection(
-                  parseInt(weatherData.current.wind_direction_10m)
-                )}`
-              : "No data found"}
-          </p>
         </div>
-        <div>
-          <p>Time</p>
-          <p>Icon rep weather</p>
-          <p>Temp</p>
-        </div>
-        <div>
-          <p>Time</p>
-          <p>Icon rep weather</p>
-          <p>Temp</p>
-        </div>
-        <div>
-          <p>asd</p>
-          <p>Icon rep weather</p>
-          <p>Temp</p>
+
+        {/*  */}
+        {/*  */}
+        {/*  */}
+        {/*  */}
+        {/*  */}
+        {/*  */}
+        {/*  */}
+
+        <div
+          id="visibility-container"
+          className="flex items-center justify-center w-[350px] h-[200px] bg-sky-200 rounded-2xl "
+        >
+          {/* Find some way of representing visibility */}asd
         </div>
       </div>
     </>
