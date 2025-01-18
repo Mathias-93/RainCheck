@@ -21,31 +21,69 @@ export default function TodaysForecast(props) {
   };
 
   const formatDailyData = () => {
-    const maxHours = 34;
-    const currentTime = new Date();
-    const minHours = currentTime.getHours() + 1;
-    const formattedTime = weatherData?.hourly?.time
-      .slice(minHours, maxHours)
-      .map((time, index) => ({
-        hour: new Date(time).toLocaleTimeString([], {
+    const formattedTime = weatherData?.hourly?.time.map((time, index) => {
+      const localTime = new Date(time);
+      const localHour = localTime.getHours(); // Get local hour as a number
+      const sunriseHour = new Date(weatherData?.daily?.sunrise[0]).getHours();
+      const sunsetHour = new Date(weatherData?.daily?.sunset[0]).getHours() + 1;
+
+      const isDayCorrected =
+        localHour >= sunriseHour && localHour < sunsetHour ? 1 : 0;
+
+      return {
+        hour: localTime.toLocaleTimeString([], {
           hour: "2-digit",
           minute: "2-digit",
           hour12: false,
         }),
         temp: weatherData?.hourly?.temperature_2m[index],
-      }));
+        weather_code: weatherData?.hourly?.weather_code[index],
+        cloud_cover: weatherData?.hourly?.cloud_cover[index],
+        rain: weatherData?.hourly?.rain[index],
+        is_day: isDayCorrected, // Use the manually corrected is_day
+      };
+    });
 
     return (
       <div className="flex">
-        {formattedTime?.map((item, index) => {
-          return (
+        {(() => {
+          if (!formattedTime || formattedTime.length === 0) return null; // Handle empty data case
+
+          // Get the current local hour
+          const currentHour = new Date().getHours();
+
+          // Find the closest matching hour in the dataset
+          const startIndex = formattedTime.findIndex(
+            (item) => parseInt(item.hour) === currentHour
+          );
+
+          // If no exact match is found, default to index 0
+          const safeStartIndex = startIndex !== -1 ? startIndex : 0;
+
+          // Ensure we only slice within available data boundaries
+          const firstPart = formattedTime.slice(
+            safeStartIndex,
+            safeStartIndex + 24
+          );
+
+          // If we reach the end of the array, take remaining hours from the next day
+          const remainingHoursNeeded = 24 - firstPart.length;
+          const secondPart =
+            remainingHoursNeeded > 0
+              ? formattedTime.slice(0, remainingHoursNeeded)
+              : [];
+
+          // Merge both parts to always get exactly 24 hours
+          const next24Hours = [...firstPart, ...secondPart];
+
+          return next24Hours.map((item, index) => (
             <div key={index} className="flex flex-col w-[90px] gap-2">
               <p className="w-[20px]">{`${item.hour}`}</p>
-              <div>{handleDisplayWeatherImage(weatherData, "h-[30px]")}</div>
+              <div>{handleDisplayWeatherImage(item, "h-[30px]")}</div>
               <p>{`${item.temp}°`}</p>
             </div>
-          );
-        })}
+          ));
+        })()}
       </div>
     );
   };

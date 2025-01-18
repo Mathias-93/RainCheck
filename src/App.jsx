@@ -9,8 +9,14 @@ import FutureForecast from "./components/FutureForecast";
 import { GlobalContext } from "./Context";
 
 function App() {
-  const { location, setLocation, setData, setWeatherData, setIsDarkMode } =
-    useContext(GlobalContext);
+  const {
+    location,
+    setLocation,
+    setData,
+    setWeatherData,
+    weatherData,
+    setIsDarkMode,
+  } = useContext(GlobalContext);
 
   const formatDate = (timeString) => {
     const date = new Date(timeString);
@@ -104,7 +110,7 @@ function App() {
       >
         <div
           id="main-container"
-          className="p-4 w-[80%] h-full dark:bg-slate-700 bg-sky-100 shadow-lg rounded-lg flex gap-5 my-5 transition-colors duration-300"
+          className="p-4 w-[80%] min-h-[800px] dark:bg-slate-700 bg-sky-100 shadow-lg rounded-lg flex gap-5 my-5 transition-colors duration-300"
         >
           <SideBar />
           <div id="middle-container" className="flex flex-col w-[65%]">
@@ -112,18 +118,22 @@ function App() {
 
             <WeatherPanel />
 
-            <div
-              id="todays-forecast-div"
-              className="flex flex-col flex-grow-1 p-4 bg-sky-200 shadow-lg dark:text-gray-200 dark:bg-slate-500 rounded w-[80%] mt-[50px] ml-[20px] gap-5 text-slate-700 transition-colors duration-300 overflow-y-hidden"
-            >
-              <TodaysForecast formatDate={formatDate} />
-            </div>
-            <div
-              id="weather-conditions-div"
-              className="flex flex-col p-5 bg-sky-200 shadow-lg dark:text-gray-200 dark:bg-slate-500 rounded w-[80%] max-h-full mt-[50px] ml-[20px] gap-5 text-slate-700 transition-colors duration-300 "
-            >
-              <WeatherConditions />
-            </div>
+            {weatherData && (
+              <div
+                id="todays-forecast-div"
+                className="flex flex-col flex-grow-1 p-4 bg-sky-200 shadow-lg dark:text-gray-200 dark:bg-slate-500 rounded w-[80%] mt-[50px] ml-[20px] gap-5 text-slate-700 transition-colors duration-300 overflow-y-hidden"
+              >
+                <TodaysForecast formatDate={formatDate} />
+              </div>
+            )}
+            {weatherData && (
+              <div
+                id="weather-conditions-div"
+                className="flex flex-col p-5 bg-sky-200 shadow-lg dark:text-gray-200 dark:bg-slate-500 rounded w-[80%] max-h-full mt-[50px] ml-[20px] gap-5 text-slate-700 transition-colors duration-300 "
+              >
+                <WeatherConditions />
+              </div>
+            )}
           </div>
           <div
             id="future-forecast-div"

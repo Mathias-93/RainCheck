@@ -33,8 +33,12 @@ export default function WeatherCode({ currentWeatherCode }) {
       99: "Heavy thunderstorm with hail",
     };
 
-    return weatherCodeMap[n] || "Unknown";
+    return weatherCodeMap[n] || null;
   };
 
-  return <div>{getWeatherCode(currentWeatherCode)}</div>;
+  return (
+    <div className="text-2xl font-semibold">
+      <p>{getWeatherCode(currentWeatherCode)}</p>
+    </div>
+  );
 }
