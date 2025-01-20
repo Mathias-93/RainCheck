@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { GlobalContext } from "../Context";
 import "../index.css";
+import WeatherConditionsCard from "./WeatherConditionsCard";
 
 export default function WeatherConditions() {
   const { weatherData } = useContext(GlobalContext);
@@ -14,6 +15,78 @@ export default function WeatherConditions() {
     return directions[directionIndex]; // Return the direction value at the position of the calculated index
   };
 
+  const calculateUvIndex = (uvIndex) => {
+    const uvIndexLevels = [
+      {
+        min: 0,
+        max: 2,
+        label: "Low",
+        color: "green-500",
+        advice: "No protection needed.",
+      },
+      {
+        min: 3,
+        max: 5,
+        label: "Moderate",
+        color: "yellow-500",
+        advice: "Use sunscreen, sunglasses, and stay in shade around midday.",
+      },
+      {
+        min: 6,
+        max: 7,
+        label: "High",
+        color: "orange-500",
+        advice:
+          "Wear a hat, SPF 30+ sunscreen, and limit sun exposure from 10 AM - 4 PM.",
+      },
+      {
+        min: 8,
+        max: 10,
+        label: "Very High",
+        color: "red-500",
+        advice:
+          "SPF 50+ sunscreen, protective clothing, and avoid sun between 10 AM - 4 PM.",
+      },
+      {
+        min: 11,
+        max: Infinity,
+        label: "Extreme",
+        color: "purple-500",
+        advice: "Avoid sun exposure; full protection is necessary!",
+      },
+    ];
+
+    return uvIndexLevels.find(
+      (uvObject) => uvIndex >= uvObject.min && uvIndex <= uvObject.max
+    );
+  };
+
+  const uvIndexInfo = calculateUvIndex(
+    Math.round(weatherData?.hourly?.uv_index[0])
+  );
+  console.log(uvIndexInfo);
+
+  const calculateSunriseSunset = (sunriseTime, sunsetTime) => {
+    const sunrise = new Date(sunriseTime);
+    const [sunriseHour, sunriseMinute] = [
+      sunrise.getHours(),
+      sunrise.getMinutes(),
+    ];
+    const sunset = new Date(sunsetTime);
+    const [sunsetHour, sunsetMinute] = [sunset.getHours(), sunset.getMinutes()];
+
+    const formattedSunriseTimeString = `Sunrise ${sunriseHour}:${sunriseMinute}`;
+    const formattedSunsetTimeString = `Sunset ${sunsetHour}:${sunsetMinute}`;
+
+    return [formattedSunriseTimeString, formattedSunsetTimeString];
+  };
+
+  const [formattedSunriseTimeString, formattedSunsetTimeString] =
+    calculateSunriseSunset(
+      weatherData?.daily?.sunrise[0],
+      weatherData?.daily?.sunset[0]
+    );
+
   return (
     <>
       <div className="flex flex-col text-center">
@@ -21,74 +94,99 @@ export default function WeatherConditions() {
       </div>
 
       <div className="grid grid-cols-2 gap-8 p-4">
-        <div
-          id="precipitation-container"
-          className="flex items-center justify-center w-[350px] h-[200px] bg-sky-200 rounded-2xl "
+        <WeatherConditionsCard
+          id="precipitation"
+          title={"Precipitation"}
+          icon={"cloud-showers-heavy"}
         >
-          {/* Current precipitation, precipitation probability */}
-          {}
-        </div>
-        <div
-          id="wind-container"
-          className="flex flex-col p-4 items-center justify-center w-[350px] h-[200px] bg-sky-200 rounded-2xl "
-        >
-          <div className="flex gap-2 w-full h-[20%]">
-            <h3 className="text-2xl font-semibold flex items-center">Wind</h3>
-            <i className="fa-solid fa-wind flex items-center text-2xl"></i>
-          </div>
+          {weatherData?.current?.precipitation >= 0 && (
+            <h1 className="text-5xl font-semibold p-3">
+              {weatherData?.current?.precipitation}{" "}
+              {weatherData?.current_units.precipitation}
+            </h1>
+          )}
+          <h3 className="text-lg font-semibold p-3">
+            Probability {weatherData?.daily?.precipitation_probability_max[0]}%
+          </h3>
+        </WeatherConditionsCard>
 
-          <div className="flex flex-col justify-between w-full h-full">
-            <h1 className="text-5xl font-semibold p-3">8 m/s</h1>
-            <h3 className="text-lg font-semibold p-3">
-              {weatherData?.current?.wind_direction_10m
-                ? `From ${windDirection(
-                    parseInt(weatherData.current.wind_direction_10m)
-                  )}`
-                : "No data found"}
+        <WeatherConditionsCard id="wind" title={"Wind"} icon={"wind"}>
+          <h1 className="text-5xl font-semibold p-3">
+            {weatherData?.current?.wind_speed_10m}{" "}
+            {weatherData?.current_units?.wind_speed_10m}
+          </h1>
+          <h3 className="text-lg font-semibold p-3">
+            {weatherData?.current?.wind_direction_10m
+              ? `From ${windDirection(
+                  parseInt(weatherData.current.wind_direction_10m)
+                )}`
+              : "No data found"}
+          </h3>
+        </WeatherConditionsCard>
+
+        <WeatherConditionsCard
+          id="sunrise-sunset"
+          title={"Sunrise & sunset"}
+          icon={"sun"}
+        >
+          <div className="flex">
+            <h3 className="text-lg font-semibold p-3 flex gap-2 items-center justify-center">
+              <div className="flex flex-col items-center justify-center">
+                <i className="fa-solid fa-chevron-up text-sm"></i>
+                <i className="fa-regular fa-sun"></i>
+              </div>{" "}
+              {formattedSunriseTimeString}
             </h3>
           </div>
-        </div>
+          <hr className="bg-slate-500 h-[2px] border-0" />
+          <div className="flex">
+            <h3 className="text-lg font-semibold p-3 flex gap-2 items-center justify-center">
+              <div className="flex flex-col items-center justify-center">
+                <i className="fa-solid fa-chevron-down text-sm"></i>
+                <i className="fa-regular fa-sun"></i>
+              </div>{" "}
+              {formattedSunsetTimeString}
+            </h3>
+          </div>
+        </WeatherConditionsCard>
 
-        <div
-          id="sunrise-sunset-container"
-          className="flex items-center justify-center w-[350px] h-[200px] bg-sky-200 rounded-2xl "
+        {/*  */}
+        {/*  */}
+        {/*  */}
+        {/*  */}
+
+        <WeatherConditionsCard
+          id="uv-index"
+          title={"UV index"}
+          icon={"cloud-sun"}
         >
-          {/* Sunrise and sunset times for today */}asd
-        </div>
+          <i className="fa-regular fa-circle-question absolute right-6 top-6"></i>
+          <h3 className="text-5xl font-semibold p-3">
+            {weatherData?.hourly?.uv_index[0]}
+          </h3>
+          <div className="flex gap-2 items-center">
+            <p className="font-semibold">{uvIndexInfo.label}</p>
+            <i className={`fa-solid fa-circle text-${uvIndexInfo.color}`}></i>
+          </div>
+          <p className="font-semibold">{uvIndexInfo.advice}</p>
+        </WeatherConditionsCard>
 
-        <div
-          id="uv-index-container"
-          className="flex items-center justify-center w-[350px] h-[200px] bg-sky-200 rounded-2xl "
-        >
-          {/* Current UV index by number and whether it's high or low */}asd
-        </div>
-
-        {/*  */}
-        {/*  */}
-        {/*  */}
         {/*  */}
         {/*  */}
         {/*  */}
         {/*  */}
 
-        <div
-          id="humidity-container"
-          className="relative flex flex-col items-center gap-2 p-3 w-[350px] h-[200px] bg-sky-200 rounded-2xl overflow-hidden"
+        <WeatherConditionsCard
+          id="humidity"
+          title={"Relative humidity"}
+          icon={"droplet"}
         >
           <div
-            className="absolute bottom-0 left-0 w-full bg-sky-300 transition-all duration-500 opacity-60 wavy-top"
+            className="absolute bottom-0 left-0 w-full bg-sky-300 transition-all duration-500 opacity-60 dark:bg-slate-400 dark:text-slate-100 text-gray-600 rounded-b-2xl rounded-t-md"
             style={{
               height: `${weatherData?.current?.relative_humidity_2m || 0}%`,
             }}
           ></div>
-
-          {/* Text stays above the waves */}
-          <div className="z-10 flex gap-2 w-full h-[20%] p-3">
-            <h3 className="text-2xl font-semibold flex items-center">
-              Relative Humidity
-            </h3>
-            <i className="fa-solid fa-droplet flex items-center text-2xl"></i>
-          </div>
 
           <div className="z-10 flex w-full h-full p-3 ml-5">
             <h3 className="text-5xl font-semibold">
@@ -97,22 +195,19 @@ export default function WeatherConditions() {
                 : "No data found"}
             </h3>
           </div>
-        </div>
+        </WeatherConditionsCard>
 
-        {/*  */}
-        {/*  */}
-        {/*  */}
-        {/*  */}
-        {/*  */}
-        {/*  */}
-        {/*  */}
-
-        <div
-          id="visibility-container"
-          className="flex items-center justify-center w-[350px] h-[200px] bg-sky-200 rounded-2xl "
+        <WeatherConditionsCard
+          id="visibility"
+          icon={"eye"}
+          title={"Visibility"}
         >
-          {/* Find some way of representing visibility */}asd
-        </div>
+          <i className="fa-regular fa-circle-question absolute right-6 top-6"></i>
+          <h3 className="text-5xl font-semibold p-3">
+            {weatherData?.hourly?.visibility[0]}{" "}
+            {weatherData?.hourly_units?.visibility}
+          </h3>
+        </WeatherConditionsCard>
       </div>
     </>
   );
