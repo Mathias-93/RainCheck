@@ -1,10 +1,23 @@
-import React, { useContext } from "react";
+import React, { useContext, useRef } from "react";
 import { GlobalContext } from "../Context";
 import "../index.css";
 import WeatherConditionsCard from "./WeatherConditionsCard";
+import WeatherConditionsInfoModal from "./WeatherConditionsInfoModal";
+import useOutsideClick from "../utils/modal/Modal";
+import { uvIndexLevels } from "../utils/data/data";
+import { kilometersToMiles } from "../utils/helper-functions/helper";
 
 export default function WeatherConditions() {
-  const { weatherData } = useContext(GlobalContext);
+  const {
+    weatherData,
+    setShowContent,
+    showContent,
+    currentModal,
+    setCurrentModal,
+  } = useContext(GlobalContext);
+
+  const ref = useRef();
+  useOutsideClick(ref, () => setShowContent(false));
 
   const windDirection = (degrees) => {
     const directions = ["N", "NE", "E", "SE", "S", "SW", "W", "NW", "N"]; // Array of directions
@@ -16,46 +29,6 @@ export default function WeatherConditions() {
   };
 
   const calculateUvIndex = (uvIndex) => {
-    const uvIndexLevels = [
-      {
-        min: 0,
-        max: 2,
-        label: "Low",
-        color: "green-500",
-        advice: "No protection needed.",
-      },
-      {
-        min: 3,
-        max: 5,
-        label: "Moderate",
-        color: "yellow-500",
-        advice: "Use sunscreen, sunglasses, and stay in shade around midday.",
-      },
-      {
-        min: 6,
-        max: 7,
-        label: "High",
-        color: "orange-500",
-        advice:
-          "Wear a hat, SPF 30+ sunscreen, and limit sun exposure from 10 AM - 4 PM.",
-      },
-      {
-        min: 8,
-        max: 10,
-        label: "Very High",
-        color: "red-500",
-        advice:
-          "SPF 50+ sunscreen, protective clothing, and avoid sun between 10 AM - 4 PM.",
-      },
-      {
-        min: 11,
-        max: Infinity,
-        label: "Extreme",
-        color: "purple-500",
-        advice: "Avoid sun exposure; full protection is necessary!",
-      },
-    ];
-
     return uvIndexLevels.find(
       (uvObject) => uvIndex >= uvObject.min && uvIndex <= uvObject.max
     );
@@ -64,7 +37,6 @@ export default function WeatherConditions() {
   const uvIndexInfo = calculateUvIndex(
     Math.round(weatherData?.hourly?.uv_index[0])
   );
-  console.log(uvIndexInfo);
 
   const calculateSunriseSunset = (sunriseTime, sunsetTime) => {
     const sunrise = new Date(sunriseTime);
@@ -150,31 +122,27 @@ export default function WeatherConditions() {
           </div>
         </WeatherConditionsCard>
 
-        {/*  */}
-        {/*  */}
-        {/*  */}
-        {/*  */}
-
         <WeatherConditionsCard
           id="uv-index"
           title={"UV index"}
           icon={"cloud-sun"}
         >
-          <i className="fa-regular fa-circle-question absolute right-6 top-6"></i>
+          <i
+            onClick={() => {
+              setShowContent(true);
+              setCurrentModal("uv");
+            }}
+            className="fa-regular fa-circle-question z-10 absolute right-6 top-6 cursor-pointer"
+          ></i>
           <h3 className="text-5xl font-semibold p-3">
             {weatherData?.hourly?.uv_index[0]}
           </h3>
           <div className="flex gap-2 items-center">
             <p className="font-semibold">{uvIndexInfo.label}</p>
-            <i className={`fa-solid fa-circle text-${uvIndexInfo.color}`}></i>
+            <i className={`fa-solid fa-circle ${uvIndexInfo.color}`}></i>
           </div>
           <p className="font-semibold">{uvIndexInfo.advice}</p>
         </WeatherConditionsCard>
-
-        {/*  */}
-        {/*  */}
-        {/*  */}
-        {/*  */}
 
         <WeatherConditionsCard
           id="humidity"
@@ -202,13 +170,24 @@ export default function WeatherConditions() {
           icon={"eye"}
           title={"Visibility"}
         >
-          <i className="fa-regular fa-circle-question absolute right-6 top-6"></i>
+          <i
+            onClick={() => {
+              setShowContent(true);
+              setCurrentModal("visibility");
+            }}
+            className="fa-regular fa-circle-question absolute right-6 top-6 cursor-pointer z-10"
+          ></i>
           <h3 className="text-5xl font-semibold p-3">
-            {weatherData?.hourly?.visibility[0]}{" "}
-            {weatherData?.hourly_units?.visibility}
+            {weatherData?.hourly?.visibility[0] / 1000} km
           </h3>
+          <p className="font-semibold pl-5">
+            {kilometersToMiles(weatherData?.hourly?.visibility[0] / 1000)} miles
+          </p>
         </WeatherConditionsCard>
       </div>
+
+      {/* Modal */}
+      {showContent && <WeatherConditionsInfoModal ref={ref} />}
     </>
   );
 }
