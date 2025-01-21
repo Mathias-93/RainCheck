@@ -8,7 +8,7 @@ export default function DarkMode() {
     <div className="flex flex-col items-center gap-2">
       <div
         onClick={toggleDarkMode}
-        className={`w-14 h-8 flex items-center mt-3 bg-sky-100 dark:bg-slate-600 rounded-full p-1 cursor-pointer transition-colors duration-300 ${
+        className={`w-14 h-8 flex items-center mt-3 bg-white dark:bg-slate-500 rounded-full p-1 cursor-pointer transition-colors duration-300 ${
           isDarkMode ? "bg-blue-600" : "bg-gray-300"
         }`}
       >

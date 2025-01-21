@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { GlobalContext } from "../Context";
+import DarkMode from "./DarkMode";
 
 export default function SearchBar() {
   const { setInputValue, inputValue, setLocation } = useContext(GlobalContext);
@@ -13,12 +14,13 @@ export default function SearchBar() {
     setLocation(inputValue);
   };
   return (
-    <>
+    <div className="flex ml-10">
+      <DarkMode />
       <form className="flex gap-3" onSubmit={handleSubmit}>
         <input
           type="text"
           onChange={handleInputChange}
-          className="w-[500px] sm:w-[150px] md:w-[250px] lg:ml-[50px] xl:ml-[200px] xl:w-[300px] h-[50px] ml-[100px] sm:ml-[20px] rounded p-4 bg-gray-100 dark:bg-slate-500 shadow-lg transition-colors duration-300 dark:text-gray-100 text-slate-700"
+          className="w-[300px] h-[50px] ml-[100px] rounded p-4 bg-gray-100 dark:bg-slate-500 shadow-lg transition-colors duration-300 dark:text-gray-100 text-slate-700"
         />
         <button
           type="submit"
@@ -27,6 +29,6 @@ export default function SearchBar() {
           Search
         </button>
       </form>
-    </>
+    </div>
   );
 }

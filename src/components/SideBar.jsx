@@ -6,11 +6,16 @@ export default function SideBar() {
   const { toggleDarkMode, isDarkMode } = useContext(GlobalContext);
 
   return (
-    <div
+    <>
+      {/* {" "}
+      <DarkMode toggleDarkMode={toggleDarkMode} isDarkMode={isDarkMode} /> */}
+    </>
+  );
+}
+
+{
+  /* <div
       className="flex flex-col w-[150px] p-2 gap-10 rounded shadow-lg 
         dark:bg-slate-500 text-gray-200  bg-sky-200 transition-colors duration-300"
-    >
-      <DarkMode toggleDarkMode={toggleDarkMode} isDarkMode={isDarkMode} />
-    </div>
-  );
+    ></div> */
 }

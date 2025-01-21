@@ -99,7 +99,7 @@ export default function TodaysForecast(props) {
         <div className="min-w-[25px] flex justify-center rounded-md bg-sky-300 hover:bg-opacity-75 dark:bg-slate-700 dark:hover:bg-slate-600">
           <button
             onClick={scrollLeft}
-            className="w-full rounded-md bg-sky-300 hover:bg-opacity-75 dark:bg-slate-700 dark:hover:bg-slate-600"
+            className="w-full rounded-md bg-sky-300 hover:bg-opacity-30 dark:bg-slate-700 dark:hover:bg-slate-600"
           >
             <i className="fa-solid fa-caret-left text-3xl text-gray-600 dark:text-slate-300" />
           </button>
@@ -113,7 +113,7 @@ export default function TodaysForecast(props) {
         <div className="min-w-[25px] flex justify-center rounded-md bg-sky-300 hover:bg-opacity-75 dark:bg-slate-700 dark:hover:bg-slate-600">
           <button
             onClick={scrollRight}
-            className="w-full rounded-md bg-sky-300 hover:bg-opacity-75 dark:bg-slate-700 dark:hover:bg-slate-600"
+            className="w-full rounded-md bg-sky-300 hover:bg-opacity-30 dark:bg-slate-700 dark:hover:bg-slate-600"
           >
             <i className="fa-solid fa-caret-right text-3xl text-gray-600 dark:text-slate-300 " />
           </button>

@@ -7,6 +7,7 @@ import TodaysForecast from "./components/TodaysForecast";
 import WeatherConditions from "./components/WeatherConditions";
 import FutureForecast from "./components/FutureForecast";
 import { GlobalContext } from "./Context";
+import DarkMode from "./components/DarkMode";
 
 function App() {
   const {
@@ -115,10 +116,9 @@ function App() {
       >
         <div
           id="main-container"
-          className="p-4 w-[80%] min-h-[800px] dark:bg-slate-700 bg-sky-100 shadow-lg rounded-lg flex gap-5 my-5 transition-colors duration-300"
+          className="p-[50px] w-[70%] min-h-[800px] dark:bg-slate-700 bg-sky-100 shadow-lg rounded-lg flex gap-5 my-5 transition-colors duration-300 "
         >
-          <SideBar />
-          <div id="middle-container" className="flex flex-col w-[65%]">
+          <div id="middle-container" className="flex flex-col w-[85%]">
             <SearchBar />
 
             <WeatherPanel />
@@ -142,7 +142,7 @@ function App() {
           </div>
           <div
             id="future-forecast-div"
-            className="flex flex-col p-5 bg-sky-200 shadow-lg dark:text-gray-200 dark:bg-slate-500 rounded w-[30%] max-h-full ml-[20px] gap-5 text-slate-700 transition-colors duration-300"
+            className="flex flex-col p-5 bg-sky-200 shadow-lg dark:text-gray-200 dark:bg-slate-500 rounded w-[15%] max-h-full ml-[20px] gap-5 text-slate-700 transition-colors duration-300"
           >
             <FutureForecast />
           </div>

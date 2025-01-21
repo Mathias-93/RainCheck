@@ -9,7 +9,7 @@ export default function WeatherPanel() {
   const currentWeather = weatherData?.current;
 
   return (
-    <div className="flex justify-between mr-40 p-6 text-slate-700 dark:text-gray-200 transition-colors duration-300">
+    <div className="flex justify-between mr-[400px] p-6 text-slate-700 dark:text-gray-200 transition-colors duration-300">
       <div className="flex flex-col gap-[100px]">
         <div className="flex flex-col gap-4">
           {loading ? (

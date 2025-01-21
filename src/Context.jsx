@@ -28,15 +28,32 @@ export default function GlobalState({ children }) {
     localStorage.setItem("theme", !isDarkMode ? "dark" : "light");
   };
 
-  const getWeatherConditionKey = (weatherData) => {
+  const getWeatherConditionKey = (weatherData, isFuture = false) => {
     if (!weatherData) return "sunny";
 
     const { weather_code, is_day, cloud_cover } = weatherData;
 
-    if (weather_code === 96) return "thunderstorm";
-    if ([80, 81, 82].includes(weather_code) && !is_day) return "rainy_night";
-    if ([80, 81, 82].includes(weather_code)) return "rainy";
-    if ([71, 73, 75].includes(weather_code)) return "snowy";
+    // If this is a future forecast, we don't have is_day or cloud_cover
+    if (isFuture) {
+      if ([95, 96, 99].includes(weather_code)) return "thunderstorm";
+      if ([51, 53, 55, 61, 63, 65, 66, 67, 80, 81, 82].includes(weather_code))
+        return "rainy";
+      if ([71, 73, 75, 77, 85, 86].includes(weather_code)) return "snowy";
+      if ([45, 48].includes(weather_code)) return "mist";
+      if ([2, 3].includes(weather_code)) return "cloudy";
+      if ([1].includes(weather_code)) return "partlyCloudy";
+      return "sunny"; // Default
+    }
+
+    if ([95, 96, 99].includes(weather_code)) return "thunderstorm";
+    if (
+      [51, 53, 55, 61, 63, 65, 66, 67, 80, 81, 82].includes(weather_code) &&
+      !is_day
+    )
+      return "rainy_night";
+    if ([51, 53, 55, 61, 63, 65, 66, 67, 80, 81, 82].includes(weather_code))
+      return "rainy";
+    if ([71, 73, 75, 77, 85, 86].includes(weather_code)) return "snowy";
     if ([45, 48].includes(weather_code)) return "mist";
     if (!is_day && cloud_cover > 10) return "cloudyNight";
     if (!is_day) return "night";
@@ -46,7 +63,7 @@ export default function GlobalState({ children }) {
     return "sunny"; // Default
   };
 
-  const handleDisplayWeatherImage = (weatherData, size) => {
+  const handleDisplayWeatherImage = (weatherData, size, isFuture = false) => {
     const weatherIconMap = {
       night: { icon: Moon, alt: "moon" },
       sunny: { icon: sunny, alt: "sun" },
@@ -60,14 +77,20 @@ export default function GlobalState({ children }) {
       mist: { icon: mist, alt: "mist" },
     };
 
-    const conditionKey = getWeatherConditionKey(weatherData);
+    // If weatherData is just a weather_code (for future forecast), wrap it in an object
+    const weatherInfo =
+      typeof weatherData === "number"
+        ? { weather_code: weatherData }
+        : weatherData;
+
+    const conditionKey = getWeatherConditionKey(weatherInfo, isFuture);
     const { icon, alt } =
       weatherIconMap[conditionKey] || weatherIconMap["sunny"];
 
     return <img src={icon} alt={alt} className={`${size} object-cover`} />;
   };
 
-  // Displays different images on the front page depending on weather conditions
+  // Displays different images depending on weather conditions
 
   return (
     <GlobalContext.Provider
