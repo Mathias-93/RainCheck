@@ -8,14 +8,14 @@ export default function TodaysForecast(props) {
 
   const scrollLeft = () => {
     scrollRef.current.scrollBy({
-      left: -150,
+      left: -105,
       behavior: "smooth",
     });
   };
 
   const scrollRight = () => {
     scrollRef.current.scrollBy({
-      left: 150,
+      left: 105,
       behavior: "smooth",
     });
   };
@@ -77,10 +77,13 @@ export default function TodaysForecast(props) {
           const next24Hours = [...firstPart, ...secondPart];
 
           return next24Hours.map((item, index) => (
-            <div key={index} className="flex flex-col w-[90px] gap-2">
-              <p className="w-[20px]">{`${item.hour}`}</p>
+            <div
+              key={index}
+              className="flex flex-col justify-center w-14 gap-1 lg:gap-3 lg:w-16 2xl:w-20"
+            >
+              <p className="text-xs sm:text-sm md:text-base lg:text-xl">{`${item.hour}`}</p>
               <div>{handleDisplayWeatherImage(item, "h-[30px]")}</div>
-              <p>{`${item.temp}°`}</p>
+              <p className="text-xs sm:text-sm md:text-base lg:text-xl">{`${item.temp}°`}</p>
             </div>
           ));
         })()}
@@ -90,32 +93,32 @@ export default function TodaysForecast(props) {
 
   return (
     <div className="flex flex-col gap-2">
-      <div className="flex justify-center">
-        <h3 className="text-lg font-semibold">
+      <div className="flex justify-center items-center">
+        <h3 className="text-xs sm:text-base md:text-lg lg:text-2xl font-semibold">
           Hourly {formatDate(weatherData?.current?.time)}
         </h3>
       </div>
-      <div className="flex justify-between gap-2">
-        <div className="min-w-[25px] flex justify-center rounded-md bg-sky-300 hover:bg-opacity-75 dark:bg-slate-700 dark:hover:bg-slate-600">
+      <div className="flex justify-between">
+        <div className="min-w-[15px] sm:min-w-[20px] md:min-w-[25px] lg:min-w-[35px] flex justify-center rounded-md bg-sky-300 hover:bg-opacity-75 dark:bg-slate-700 dark:hover:bg-slate-600">
           <button
             onClick={scrollLeft}
-            className="w-full rounded-md bg-sky-300 hover:bg-opacity-30 dark:bg-slate-700 dark:hover:bg-slate-600"
+            className="w-full rounded-md bg-sky-300 dark:bg-slate-700 dark:hover:bg-slate-600"
           >
-            <i className="fa-solid fa-caret-left text-3xl text-gray-600 dark:text-slate-300" />
+            <i className="fa-solid fa-caret-left text-lg text-gray-600 dark:text-slate-300" />
           </button>
         </div>
         <div
           ref={scrollRef}
-          className="flex gap-1 pb-2 p-1 overflow-x-auto overflow-y-hidden scrollbar-none"
+          className="flex p-1 lg:h-full overflow-y-hidden scrollbar-none w-full"
         >
           {formatDailyData()}
         </div>
-        <div className="min-w-[25px] flex justify-center rounded-md bg-sky-300 hover:bg-opacity-75 dark:bg-slate-700 dark:hover:bg-slate-600">
+        <div className="min-w-[15px] sm:min-w-[20px] md:min-w-[25px] lg:min-w-[35px] flex justify-center rounded-md bg-sky-300 hover:bg-opacity-75 dark:bg-slate-700 dark:hover:bg-slate-600">
           <button
             onClick={scrollRight}
-            className="w-full rounded-md bg-sky-300 hover:bg-opacity-30 dark:bg-slate-700 dark:hover:bg-slate-600"
+            className="w-full rounded-md bg-sky-300 dark:bg-slate-700 dark:hover:bg-slate-600"
           >
-            <i className="fa-solid fa-caret-right text-3xl text-gray-600 dark:text-slate-300 " />
+            <i className="fa-solid fa-caret-right text-lg text-gray-600 dark:text-slate-300 " />
           </button>
         </div>
       </div>

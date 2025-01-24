@@ -5,6 +5,15 @@
 /* For Firefox */
 #todays-forecast-div {
   scroll-behavior: smooth;
+  
+}
+
+.darker-blue {
+  background-color: rgb(166, 222, 252);
+}
+
+.even-darker-blue {
+  background-color: rgb(74, 201, 252)
 }
 
 /* .wavy-top {
@@ -20,3 +29,6 @@
     100% 100%, 0% 100%
   );
 } */
+
+
+ 

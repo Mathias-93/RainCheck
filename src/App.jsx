@@ -1,13 +1,11 @@
 import { useEffect, useContext } from "react";
 import "./index.css";
-import SideBar from "./components/SideBar";
 import SearchBar from "./components/SearchBar";
 import WeatherPanel from "./components/WeatherPanel";
 import TodaysForecast from "./components/TodaysForecast";
 import WeatherConditions from "./components/WeatherConditions";
 import FutureForecast from "./components/FutureForecast";
 import { GlobalContext } from "./Context";
-import DarkMode from "./components/DarkMode";
 
 function App() {
   const {
@@ -116,9 +114,12 @@ function App() {
       >
         <div
           id="main-container"
-          className="p-[50px] w-[70%] min-h-[800px] dark:bg-slate-700 bg-sky-100 shadow-lg rounded-lg flex gap-5 my-5 transition-colors duration-300 "
+          className="flex flex-col 2xl:flex-row justify-center items-center 2xl:items-start 2xl:mt-5 w-[95%] h-[95%] min-h-[800px] pb-10 dark:bg-slate-700 bg-sky-100 shadow-lg rounded-lg gap-5 my-3 transition-colors duration-300"
         >
-          <div id="middle-container" className="flex flex-col w-[85%]">
+          <div
+            id="middle-container"
+            className="flex flex-col w-full justify-center items-center gap-5 p-1 2xl:w-[75%]"
+          >
             <SearchBar />
 
             <WeatherPanel />
@@ -126,7 +127,7 @@ function App() {
             {weatherData && (
               <div
                 id="todays-forecast-div"
-                className="flex flex-col flex-grow-1 p-4 bg-sky-200 shadow-lg dark:text-gray-200 dark:bg-slate-500 rounded w-[80%] mt-[50px] ml-[20px] gap-5 text-slate-700 transition-colors duration-300 overflow-y-hidden"
+                className="flex flex-col p-2 w-full sm:w-[70%] lg:w-[60%] lg:p-6 mt-5 bg-sky-200 shadow-lg dark:text-gray-200 dark:bg-slate-500 rounded gap-5 text-slate-700 transition-colors duration-300"
               >
                 <TodaysForecast formatDate={formatDate} />
               </div>
@@ -134,7 +135,7 @@ function App() {
             {weatherData && (
               <div
                 id="weather-conditions-div"
-                className="flex flex-col items-center justify-center p-5 gap-5 rounded w-[80%] max-h-full mt-[50px] ml-[20px]  text-slate-700 transition-colors duration-300"
+                className="flex flex-col w-full sm:w-[90%] items-center justify-center p-2 gap-2 mt-4 rounded text-slate-700 transition-colors duration-300"
               >
                 <WeatherConditions />
               </div>
@@ -142,7 +143,7 @@ function App() {
           </div>
           <div
             id="future-forecast-div"
-            className="flex flex-col p-5 bg-sky-200 shadow-lg dark:text-gray-200 dark:bg-slate-500 rounded w-[15%] max-h-full ml-[20px] gap-5 text-slate-700 transition-colors duration-300"
+            className="flex flex-col items-center justify-center w-full 2xl:w-[40%] 2xl:mt-5 sm:w-[80%] max-h-full p-2 shadow-lg dark:text-gray-200 dark:bg-slate-700 rounded-lg  text-slate-700 transition-colors duration-300 2xl:shadow-none"
           >
             <FutureForecast />
           </div>

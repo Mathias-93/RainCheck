@@ -37,7 +37,7 @@ export default function WeatherCode({ currentWeatherCode }) {
   };
 
   return (
-    <div className="text-2xl font-semibold">
+    <div className="text-2xl sm:text-3xl lg:text-4xl font-semibold">
       <p>{getWeatherCode(currentWeatherCode)}</p>
     </div>
   );
