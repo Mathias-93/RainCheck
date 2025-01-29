@@ -112,9 +112,9 @@ export default function WeatherConditions() {
                 <i className="fa-solid fa-chevron-up text-xs"></i>
                 <i className="fa-regular fa-sun text-sm"></i>
               </div>{" "}
-              <h3 className="text-sm lg:text-lg">
+              <span className="text-sm lg:text-lg">
                 {formattedSunriseTimeString}
-              </h3>
+              </span>
             </h3>
           </div>
           <hr className="bg-slate-500 h-[2px] lg:h-[1px] border-0" />
@@ -124,9 +124,9 @@ export default function WeatherConditions() {
                 <i className="fa-solid fa-chevron-down text-xs"></i>
                 <i className="fa-regular fa-sun text-sm"></i>
               </div>{" "}
-              <h3 className="text-sm lg:text-lg">
+              <span className="text-sm lg:text-lg">
                 {formattedSunsetTimeString}
-              </h3>
+              </span>
             </h3>
           </div>
         </WeatherConditionsCard>
@@ -163,7 +163,11 @@ export default function WeatherConditions() {
           icon={"droplet"}
         >
           <div
-            className="absolute bottom-0 left-0 w-full even-darker-blue transition-all duration-500 opacity-60 dark:bg-slate-400 dark:text-slate-100 text-gray-600 rounded-b-2xl rounded-t-md"
+            className="absolute bottom-0 left-0 w-full even-darker-blue 
+             transition-all duration-500 opacity-60 
+             dark:bg-gradient-to-t dark:from-[#010102] dark:via-[#1f1f1f] dark:to-[#292929] 
+             dark:text-slate-100 text-gray-600 rounded-b-2xl rounded-t-sm 
+             bg-[length:200%_200%] animate-gradient-y"
             style={{
               height: `${weatherData?.current?.relative_humidity_2m || 0}%`,
             }}

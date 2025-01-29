@@ -92,17 +92,17 @@ export default function TodaysForecast(props) {
   };
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2 ">
       <div className="flex justify-center items-center">
         <h3 className="text-xs sm:text-base md:text-lg lg:text-2xl font-semibold">
           Hourly {formatDate(weatherData?.current?.time)}
         </h3>
       </div>
       <div className="flex justify-between">
-        <div className="min-w-[15px] sm:min-w-[20px] md:min-w-[25px] lg:min-w-[35px] flex justify-center rounded-md bg-sky-300 hover:bg-opacity-75 dark:bg-slate-700 dark:hover:bg-slate-600">
+        <div className="min-w-[15px] sm:min-w-[20px] md:min-w-[25px] lg:min-w-[35px] flex justify-center rounded-md bg-sky-300 dark:bg-transparent">
           <button
             onClick={scrollLeft}
-            className="w-full rounded-md bg-sky-300 dark:bg-slate-700 dark:hover:bg-slate-600"
+            className="w-full rounded-md bg-sky-300 dark:bg-zinc-900 shadow-lg border border-gray-700"
           >
             <i className="fa-solid fa-caret-left text-lg text-gray-600 dark:text-slate-300" />
           </button>
@@ -113,10 +113,10 @@ export default function TodaysForecast(props) {
         >
           {formatDailyData()}
         </div>
-        <div className="min-w-[15px] sm:min-w-[20px] md:min-w-[25px] lg:min-w-[35px] flex justify-center rounded-md bg-sky-300 hover:bg-opacity-75 dark:bg-slate-700 dark:hover:bg-slate-600">
+        <div className="min-w-[15px] sm:min-w-[20px] md:min-w-[25px] lg:min-w-[35px] flex justify-center rounded-md bg-sky-300 dark:bg-transparent">
           <button
             onClick={scrollRight}
-            className="w-full rounded-md bg-sky-300 dark:bg-slate-700 dark:hover:bg-slate-600"
+            className="w-full rounded-md bg-sky-300 dark:bg-zinc-900 border border-gray-700"
           >
             <i className="fa-solid fa-caret-right text-lg text-gray-600 dark:text-slate-300 " />
           </button>
