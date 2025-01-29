@@ -21,6 +21,7 @@ export default function GlobalState({ children }) {
   const [loading, setLoading] = useState(false);
   const [showContent, setShowContent] = useState(false);
   const [currentModal, setCurrentModal] = useState(null);
+  const [currentTitle, setCurrentTitle] = useState("");
 
   const toggleDarkMode = () => {
     setIsDarkMode((prevMode) => !prevMode);
@@ -113,6 +114,8 @@ export default function GlobalState({ children }) {
         setShowContent,
         currentModal,
         setCurrentModal,
+        currentTitle,
+        setCurrentTitle,
       }}
     >
       {children}

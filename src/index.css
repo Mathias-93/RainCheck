@@ -20,5 +20,27 @@
   background: linear-gradient(to right, rgb(43, 55, 71), rgb(77, 77, 77))
 }
 
+.lower-temp-text {
+  color: rgb(187, 187, 193);
+}
+
+@layer utilities {
+  .dark-gradient {
+    @apply dark:bg-gradient-to-br dark:from-[#010102] dark:via-[#1f1f1f] dark:to-[#363636];
+  }
+}
+
+
+@layer utilities {
+  .dark-gradient-panels {
+    @apply dark:bg-gradient-to-br dark:from-[#505050] dark:to-[#303030];
+  }
+}
+
+@layer utilities {
+  .dark-gradient-search {
+    @apply dark:bg-gradient-to-br dark:from-[#080808] dark:to-[#2c2c2c];
+  }
+}
 
  

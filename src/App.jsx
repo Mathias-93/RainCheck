@@ -6,6 +6,8 @@ import TodaysForecast from "./components/TodaysForecast";
 import WeatherConditions from "./components/WeatherConditions";
 import FutureForecast from "./components/FutureForecast";
 import { GlobalContext } from "./Context";
+import { getRandomNumber } from "./utils/helper-functions/helper";
+import { weatherQuotes } from "./utils/data/data";
 
 function App() {
   const {
@@ -17,6 +19,8 @@ function App() {
     setIsDarkMode,
     loading,
     setLoading,
+    currentTitle,
+    setCurrentTitle,
   } = useContext(GlobalContext);
 
   const formatDate = (timeString) => {
@@ -73,6 +77,12 @@ function App() {
     }
   };
 
+  const handleChangeTitle = () => {
+    setCurrentTitle(weatherQuotes[getRandomNumber()]);
+  };
+
+  if (!currentTitle) handleChangeTitle();
+
   useEffect(() => {
     // Get theme from local storage if there is any, set the theme to that theme and toggle "dark" in tailwind
     const savedTheme = localStorage.getItem("theme");
@@ -122,12 +132,15 @@ function App() {
       >
         <div
           id="main-container"
-          className="flex flex-col 2xl:flex-row border-2 border-gray-900 justify-center items-center 2xl:mt-5 w-[95%] h-[95%] 2xl:w-[80%] min-h-[800px] pb-10 dark:bg-gradient-to-br dark:from-[#010102] dark:via-[#1f1f1f] dark:to-[#363636] bg-sky-100 shadow-lg rounded-lg gap-5 my-3 transition-colors duration-300"
+          className="flex flex-col 2xl:flex-row border-2 border-gray-900 justify-center items-center 2xl:mt-5 w-[95%] h-[95%] 2xl:w-[70%] min-h-[800px] pb-10 dark:bg-gradient-to-br dark:dark-gradient bg-sky-100 shadow-lg rounded-lg gap-5 my-3 transition-colors duration-300"
         >
           <div
             id="middle-container"
             className="flex flex-col w-full justify-center items-center gap-5 p-1 2xl:w-[60%] "
           >
+            {!weatherData && (
+              <h1 className="text-white text-4xl">{currentTitle}</h1>
+            )}
             <SearchBar />
 
             <WeatherPanel />
@@ -135,7 +148,7 @@ function App() {
             {weatherData && (
               <div
                 id="todays-forecast-div"
-                className="flex flex-col p-2 w-full sm:w-[70%] border border-gray-600 lg:w-[60%] lg:p-6 mt-5 bg-sky-200 shadow-lg dark:text-gray-200 dark:bg-gradient-to-br dark:from-[#505050] dark:to-[#303030] rounded gap-5 text-slate-700 transition-colors duration-300"
+                className="flex flex-col p-2 w-full sm:w-[70%] border border-gray-600 lg:w-[60%] lg:p-6 mt-5 2xl:w-[75%] bg-sky-200 shadow-lg dark:text-gray-200 dark:bg-gradient-to-br dark:from-[#505050] dark:to-[#303030] rounded gap-5 text-slate-700 transition-colors duration-300"
               >
                 <TodaysForecast formatDate={formatDate} />
               </div>
@@ -149,12 +162,15 @@ function App() {
               </div>
             )}
           </div>
-          <div
-            id="future-forecast-div"
-            className="flex flex-col items-center justify-center 2xl:items-start w-full 2xl:w-[40%] sm:w-[80%] max-h-full p-2 shadow-lg dark:text-gray-200 dark:bg-transparent rounded-lg  text-slate-700 transition-colors duration-300 2xl:shadow-none"
-          >
-            <FutureForecast />
-          </div>
+
+          {weatherData && (
+            <div
+              id="future-forecast-div"
+              className="flex flex-col items-center justify-center 2xl:items-start w-full 2xl:w-[25%] sm:w-[80%] p-2 shadow-lg dark:text-gray-200 dark:bg-transparent rounded-lg  text-slate-700 transition-colors duration-300 2xl:shadow-none"
+            >
+              <FutureForecast />
+            </div>
+          )}
         </div>
       </div>
     </>

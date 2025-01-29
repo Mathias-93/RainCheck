@@ -19,14 +19,14 @@ const WeatherConditionsInfoModal = forwardRef((props, ref) => {
 
   return (
     <>
-      <div className="bg-slate-500 bg-opacity-50 flex flex-col items-center justify-center fixed inset-0 z-50"></div>
+      <div className="bg-slate-600 bg-opacity-50 flex flex-col items-center justify-center fixed inset-0 z-50"></div>
       <div
         ref={ref}
-        className="w-[300px] h-[450px] lg:w-[500px] lg:h-[650px] bg-slate-100 dark:bg-slate-700 dark:text-slate-200 gap-6 py-7 px-4 rounded-md shadow-lg flex flex-col z-50 fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+        className="w-[300px] h-[450px] lg:w-[500px] lg:h-[650px] bg-slate-100 dark:bg-gradient-to-br dark:from-[#000000] dark:via-[#0a0a0a] dark:to-[#111111] dark:border dark:border-slate-600 dark:text-slate-200 gap-6 py-7 px-4 rounded-md shadow-lg flex flex-col z-50 fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
       >
         <i
           onClick={() => setShowContent(false)}
-          className="fa-solid fa-xmark absolute right-3 top-2 cursor-pointer p-1 text-slate-500 hover:text-slate-900"
+          className="fa-solid fa-xmark absolute right-3 top-2 cursor-pointer p-1 text-slate-300 hover:text-slate-500"
         ></i>
         <div className="flex flex-col gap-6 p-2 h-full overflow-y-auto">
           <h1 className="font-semibold text-lg lg:text-3xl">

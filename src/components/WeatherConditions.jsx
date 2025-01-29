@@ -112,7 +112,7 @@ export default function WeatherConditions() {
                 <i className="fa-solid fa-chevron-up text-xs"></i>
                 <i className="fa-regular fa-sun text-sm"></i>
               </div>{" "}
-              <span className="text-sm lg:text-lg">
+              <span className="text-sm lg:text-lg 2xl:text-base">
                 {formattedSunriseTimeString}
               </span>
             </h3>
@@ -124,7 +124,7 @@ export default function WeatherConditions() {
                 <i className="fa-solid fa-chevron-down text-xs"></i>
                 <i className="fa-regular fa-sun text-sm"></i>
               </div>{" "}
-              <span className="text-sm lg:text-lg">
+              <span className="text-sm lg:text-lg 2xl:text-base">
                 {formattedSunsetTimeString}
               </span>
             </h3>
@@ -152,7 +152,7 @@ export default function WeatherConditions() {
               className={`fa-solid fa-circle ${uvIndexInfo.color} text-sm lg:text-base`}
             ></i>
           </div>
-          <p className="text-sm ml-2 lg:ml-3 lg:text-base">
+          <p className="text-sm ml-2 lg:ml-3 lg:text-base 2xl:text-sm">
             {uvIndexInfo.advice}
           </p>
         </WeatherConditionsCard>
