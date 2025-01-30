@@ -65,7 +65,7 @@ export default function WeatherConditions() {
   return (
     <>
       <div className="flex flex-col text-center">
-        <h2 className="text-lg font-semibold dark:text-slate-200 lg:text-2xl">
+        <h2 className="text-lg font-semibold dark:text-slate-200 lg:text-2xl text-white">
           Weather Conditions
         </h2>
       </div>
@@ -163,11 +163,11 @@ export default function WeatherConditions() {
           icon={"droplet"}
         >
           <div
-            className="absolute bottom-0 left-0 w-full even-darker-blue 
+            className="absolute bottom-0 left-0 w-full 
              transition-all duration-500 opacity-60 
              dark:bg-gradient-to-t dark:from-[#010102] dark:via-[#1f1f1f] dark:to-[#292929] 
              dark:text-slate-100 text-gray-600 rounded-b-2xl rounded-t-sm 
-             bg-[length:200%_200%] animate-gradient-y"
+             bg-[length:200%_200%] animate-gradient-y bg-sky-300"
             style={{
               height: `${weatherData?.current?.relative_humidity_2m || 0}%`,
             }}

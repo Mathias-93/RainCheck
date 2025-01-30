@@ -9,6 +9,7 @@ import { GlobalContext } from "./Context";
 import { getRandomNumber } from "./utils/helper-functions/helper";
 import { weatherQuotes } from "./utils/data/data";
 import DarkMode from "./components/DarkMode";
+import sun_sunglasses from "./assets/images/sun_sunglasses.png";
 
 function App() {
   const {
@@ -22,6 +23,8 @@ function App() {
     setLoading,
     currentTitle,
     setCurrentTitle,
+    error,
+    setError,
   } = useContext(GlobalContext);
 
   const formatDate = (timeString) => {
@@ -104,22 +107,31 @@ function App() {
         }`
       );
 
-      setData(data);
-      if (data.length > 0 && location !== data[0].name) {
-        setLocation(data[0].name);
-      }
+      if (data !== null) {
+        console.log(data);
 
-      const { lat, lon } = data[0]; // Deconstruct latitude and longitude from location API data
-      /* https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,rain,showers,snowfall,cloud_cover,wind_speed_10m,wind_direction_10m,wind_gusts_10m&hourly=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation_probability,precipitation,rain,snowfall,snow_depth,cloud_cover,wind_speed_10m,wind_direction_10m,wind_gusts_10m&daily=temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset,daylight_duration,sunshine_duration,uv_index_max,precipitation_sum,rain_sum,snowfall_sum,precipitation_hours,precipitation_probability_max,wind_speed_10m_max,wind_gusts_10m_max&wind_speed_unit=ms */
+        setData(data);
+        if (data.length > 0 && location !== data[0].name) {
+          setLocation(data[0].name);
+        }
 
-      const APIWeatherData = await fetchAPIdata(
-        // Using the lat and lon from location to get current local weather
-        `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,rain,showers,snowfall,weather_code,cloud_cover,wind_speed_10m,wind_direction_10m&minutely_15=weather_code,lightning_potential&hourly=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation_probability,precipitation,rain,snowfall,weather_code,cloud_cover,visibility,wind_speed_10m,wind_direction_10m,uv_index,is_day,sunshine_duration&daily=weather_code,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset,daylight_duration,uv_index_max,precipitation_sum,rain_sum,snowfall_sum,precipitation_hours,precipitation_probability_max,wind_speed_10m_max,wind_direction_10m_dominant&wind_speed_unit=ms&timezone=auto&models=best_match`
-      );
-      if (APIWeatherData) {
-        setWeatherData(APIWeatherData);
+        const { lat, lon } = data[0]; // Deconstruct latitude and longitude from location API data
+        /* https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,rain,showers,snowfall,cloud_cover,wind_speed_10m,wind_direction_10m,wind_gusts_10m&hourly=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation_probability,precipitation,rain,snowfall,snow_depth,cloud_cover,wind_speed_10m,wind_direction_10m,wind_gusts_10m&daily=temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset,daylight_duration,sunshine_duration,uv_index_max,precipitation_sum,rain_sum,snowfall_sum,precipitation_hours,precipitation_probability_max,wind_speed_10m_max,wind_gusts_10m_max&wind_speed_unit=ms */
+
+        const APIWeatherData = await fetchAPIdata(
+          // Using the lat and lon from location to get current local weather
+          `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,rain,showers,snowfall,weather_code,cloud_cover,wind_speed_10m,wind_direction_10m&minutely_15=weather_code,lightning_potential&hourly=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation_probability,precipitation,rain,snowfall,weather_code,cloud_cover,visibility,wind_speed_10m,wind_direction_10m,uv_index,is_day,sunshine_duration&daily=weather_code,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset,daylight_duration,uv_index_max,precipitation_sum,rain_sum,snowfall_sum,precipitation_hours,precipitation_probability_max,wind_speed_10m_max,wind_direction_10m_dominant&wind_speed_unit=ms&timezone=auto&models=best_match`
+        );
+        if (APIWeatherData) {
+          setWeatherData(APIWeatherData);
+        }
+        console.log(APIWeatherData);
+        setError(null);
+      } else {
+        setLocation("");
+        setWeatherData(null);
+        setError("Error: Could not find location.");
       }
-      console.log(APIWeatherData);
     };
 
     fetchData();
@@ -129,15 +141,22 @@ function App() {
     <>
       <div
         id="project-wrapper"
-        className="min-h-screen flex relative justify-center dark:bg-[url('../light.jpg')] bg-cover bg-center bg-no-repeat bg-gray-100 transition-colors duration-300 font-inter"
+        className="min-h-screen flex relative justify-center bg-[url('../lightmode-bg-3.jpg')] dark:bg-[url('../darkmode-bg.jpg')] bg-cover bg-center bg-no-repeat bg-gray-100 transition-colors duration-300 font-inter"
       >
+        {loading && (
+          <img
+            src={sun_sunglasses}
+            alt="sun with sunglasses"
+            className="w-[100px] 2xl:w-[350px] object-cover animate-spin absolute top-56 z-10"
+          />
+        )}
         <div className="absolute left-7 top-7">
           <DarkMode />
         </div>
 
         <div
           id="main-container"
-          className="flex flex-col 1xl:flex-row lg:flex-col 2xl:flex-row border-2 border-gray-900 justify-center items-center 2xl:mt-5 w-[95%] h-[95%] 2xl:w-[70%] min-h-[800px] pb-10 dark:bg-gradient-to-br dark:dark-gradient bg-sky-100 shadow-lg rounded-lg gap-5 my-3 transition-colors duration-300"
+          className="flex flex-col 1xl:flex-row lg:flex-col 2xl:flex-row justify-center items-center 2xl:mt-5 w-[95%] h-[95%] 2xl:w-[70%] min-h-[800px] pb-10 dark:bg-none rounded-lg gap-5 my-3 transition-colors duration-300"
         >
           <div
             id="middle-container"
@@ -146,26 +165,38 @@ function App() {
             }`}
           >
             {!weatherData && (
-              <div className="flex flex-col gap-5 ">
-                <h1 className="text-white text-4xl text-center">
-                  My Weather App
+              <div className="flex flex-col gap-5 text-center">
+                <h1 className="text-4xl font-bold text-white text-shadow-light dark:text-shadow-dark">
+                  RainCheck Weather ☔
                 </h1>
-                <h3 className="text-white text-2xl">{currentTitle}</h3>
+                <div
+                  className="w-full overflow-hidden whitespace-nowrap relative 
+                  border-t border-b border-line-shadow-light dark:border-yellow-500 p-2"
+                >
+                  <h3
+                    className="inline-block text-lg text-white min-w-full 
+                   animate-marquee transition-all duration-300"
+                  >
+                    This just in: {currentTitle}
+                  </h3>
+                </div>
               </div>
             )}
 
             <SearchBar />
-
+            <div className="min-h-[35px]">
+              {error && <p className="text-2xl text-white">{error}</p>}
+            </div>
             <WeatherPanel />
 
-            {weatherData && (
+            {weatherData && !error ? (
               <div
                 id="todays-forecast-div"
-                className="flex flex-col p-2 w-full sm:w-[70%] border border-gray-600 lg:w-[60%] lg:p-6 mt-5 2xl:w-[75%] bg-sky-200 shadow-lg dark:text-gray-200 dark:bg-gradient-to-br dark:from-[#505050] dark:to-[#303030] rounded gap-5 text-slate-700 transition-colors duration-300"
+                className="flex flex-col p-2 w-full sm:w-[70%] border dark:border-gray-600 lg:w-[60%] lg:p-6 mt-5 2xl:w-[75%] light-gradient-panels shadow-lg dark:text-gray-200 dark:dark-gradient-panels rounded gap-5 text-slate-700 transition-colors duration-300"
               >
                 <TodaysForecast formatDate={formatDate} />
               </div>
-            )}
+            ) : null}
             {weatherData && (
               <div
                 id="weather-conditions-div"

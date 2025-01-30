@@ -2,7 +2,7 @@ import React from "react";
 
 export default function WeatherConditionsCard({ children, title, icon }) {
   return (
-    <div className="relative flex flex-col border border-gray-600 p-2 md:p-3 2xl:p-5 mt-2 w-full h-52 darker-blue rounded-2xl dark:dark-gradient-panels dark:text-slate-200 text-gray-600 shadow-lg">
+    <div className="relative flex flex-col border light-gradient-panels dark:border-gray-600 p-2 md:p-3 2xl:p-5 mt-2 w-full h-52 darker-blue rounded-2xl dark:dark-gradient-panels dark:text-slate-200 text-gray-600 shadow-lg">
       <div className="z-10 flex gap-1 w-full h-[20%]">
         <i
           className={`fa-solid fa-${icon} flex items-center text-lg lg:text-xl`}

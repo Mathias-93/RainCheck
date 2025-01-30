@@ -65,16 +65,16 @@ export const modalData = [
 ];
 
 export const weatherQuotes = [
-  "Today’s forecast: 99% chance of checking the weather again later.",
-  "Is it sweater weather or regret-my-life choices weather?",
-  "Why trust your window when you can check the app?",
-  "Breaking: The sun still exists (we think).",
-  "Somewhere, someone is enjoying perfect weather. It’s definitely not here.",
-  "Meteorologists: The only people who can be wrong half the time and still keep their jobs.",
-  "Ah yes, another day of unhinged weather behaviour.",
+  "Today’s forecast shows a 99% chance of you checking the weather again later.",
+  "Is it sweater weather or regret-my-life choices weather? Find out at 11",
+  "Can you really trust your window, or are you simply better off checking the app? Find out now!",
+  "The sun still exists (we think).",
+  "Somewhere, someone is enjoying perfect weather. But it’s definitely not here.",
+  "Meteorologists seem to be the only people who can be wrong half the time and still keep their jobs.",
+  "Yet another day of unhinged weather behaviour.",
   "Another thrilling episode of 'Why Did I Move Here?' starts now.",
   "If you don’t like today’s weather, don’t worry—it’ll get worse soon.",
   "The sun? Haven’t heard that name in years.",
   "Life is short. So is this rare moment of decent weather.",
-  "Remember: There’s no such thing as bad weather—just bad life choices that made you go outside.",
+  "Remember, there’s no such thing as bad weather—just bad life choices that made you go outside today.",
 ];

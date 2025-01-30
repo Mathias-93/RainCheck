@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* For Firefox */
 #todays-forecast-div {
   scroll-behavior: smooth;
   
@@ -24,12 +23,13 @@
   color: rgb(187, 187, 193);
 }
 
+
+/* Dark mode stuff */
 @layer utilities {
   .dark-gradient {
     @apply dark:bg-gradient-to-br dark:from-[#010102] dark:via-[#1f1f1f] dark:to-[#363636];
   }
 }
-
 
 @layer utilities {
   .dark-gradient-panels {
@@ -49,4 +49,69 @@
   }
 }
 
+
+
+
+/* Light mode stuff */
+
+@layer utilities {
+  .light-gradient {
+    @apply bg-gradient-to-br from-[#fdfdfd] via-[#e0f2fe] to-[#b9e6fc]; 
+  }
+}
+
+@layer utilities {
+  .light-gradient-panels {
+    @apply bg-gradient-to-br from-[#eef6ff] to-[#cce2ff];
+  }
+}
+
+@layer utilities {
+  .light-gradient-toggle {
+    @apply bg-gradient-to-br from-[#cfe7fa] to-[#a5d8f7];
+  }
+}
+
+@layer utilities {
+  .light-gradient-search {
+    @apply bg-gradient-to-br from-[#ffffff] to-[#e3f2fd];
+  }
+}
+
+
+/* Title and sub heading stuff */
+/* Light Mode Text Shadow */
+@layer utilities {
+  /* Light Mode Text Shadow */
+  .text-shadow-light {
+    text-shadow: 0 0 10px rgba(0, 140, 255, 0.8),
+                 0 0 12px rgba(0, 140, 255, 0.6),
+                 0 0 20px rgba(0, 140, 255, 0.4);
+  }
+
+  /* Dark Mode Text Shadow (Registered as a Utility) */
+  .dark .text-shadow-light {
+    text-shadow: none; /* Disable light mode shadow in dark mode */
+  }
+
+  .dark .text-shadow-dark {
+    text-shadow: 0 0 10px rgba(255, 140, 0, 0.8), 
+                 0 0 12px rgba(255, 140, 0, 0.6), 
+                 0 0 20px rgba(255, 140, 0, 0.4);
+  }
+}
+
+/* Marquee Animation */
+@keyframes marquee {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 12s linear infinite;
+}
  

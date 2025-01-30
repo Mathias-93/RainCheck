@@ -8,8 +8,10 @@ export default function FutureForecast() {
   return (
     <>
       <div className="flex items-center justify-center gap-2 p-2">
-        <i className="fa-solid fa-calendar-days"></i>
-        <h3 className="text-lg font-semibold flex pt-[2px] ">7-day forecast</h3>
+        <i className="fa-solid fa-calendar-days text-white"></i>
+        <h3 className="text-lg font-semibold flex pt-[2px] text-white">
+          7-day forecast
+        </h3>
       </div>
       <div className="w-full h-full flex 2xl:flex-col gap-1 mt-2 items-center justify-center 2xl:items-start">
         {weatherData?.daily?.time.map((day, index) => {

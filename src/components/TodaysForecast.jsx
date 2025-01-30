@@ -99,10 +99,10 @@ export default function TodaysForecast(props) {
         </h3>
       </div>
       <div className="flex justify-between">
-        <div className="min-w-[15px] sm:min-w-[20px] md:min-w-[25px] lg:min-w-[35px] flex justify-center rounded-md bg-sky-300 dark:bg-transparent">
+        <div className="min-w-[15px] sm:min-w-[20px] md:min-w-[25px] lg:min-w-[35px] flex justify-center rounded-md transparent dark:bg-transparent">
           <button
             onClick={scrollLeft}
-            className="w-full rounded-md bg-sky-300 dark:bg-zinc-900 shadow-lg border border-gray-700"
+            className="w-full rounded-md light-gradient-toggle dark:dark-gradient-search shadow-lg border dark:border-gray-700"
           >
             <i className="fa-solid fa-caret-left text-lg text-gray-600 dark:text-slate-300" />
           </button>
@@ -113,10 +113,10 @@ export default function TodaysForecast(props) {
         >
           {formatDailyData()}
         </div>
-        <div className="min-w-[15px] sm:min-w-[20px] md:min-w-[25px] lg:min-w-[35px] flex justify-center rounded-md bg-sky-300 dark:bg-transparent">
+        <div className="min-w-[15px] sm:min-w-[20px] md:min-w-[25px] lg:min-w-[35px] flex justify-center rounded-md transparent dark:bg-transparent">
           <button
             onClick={scrollRight}
-            className="w-full rounded-md bg-sky-300 dark:bg-zinc-900 border border-gray-700"
+            className="w-full rounded-md light-gradient-toggle dark:dark-gradient-search border dark:border-gray-700"
           >
             <i className="fa-solid fa-caret-right text-lg text-gray-600 dark:text-slate-300 " />
           </button>
