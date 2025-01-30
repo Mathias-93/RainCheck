@@ -22,6 +22,7 @@ export default function GlobalState({ children }) {
   const [showContent, setShowContent] = useState(false);
   const [currentModal, setCurrentModal] = useState(null);
   const [currentTitle, setCurrentTitle] = useState("");
+  const [isFrontPage, setIsFrontPage] = useState(true);
 
   const toggleDarkMode = () => {
     setIsDarkMode((prevMode) => !prevMode);
@@ -116,6 +117,8 @@ export default function GlobalState({ children }) {
         setCurrentModal,
         currentTitle,
         setCurrentTitle,
+        isFrontPage,
+        setIsFrontPage,
       }}
     >
       {children}

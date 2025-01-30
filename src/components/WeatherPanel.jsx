@@ -10,7 +10,7 @@ export default function WeatherPanel() {
   const currentWeather = weatherData?.current;
 
   return (
-    <div className="flex flex-col justify-between sm:w-[70%] md:w-[60%] p-2 text-slate-700 dark:text-gray-200 transition-colors duration-300">
+    <div className="flex flex-col justify-between 2xl:mt-10 sm:w-[70%] md:w-[60%] p-2 text-slate-700 dark:text-gray-200 transition-colors duration-300">
       {loading ? (
         <img
           src={sun_sunglasses}
@@ -20,6 +20,9 @@ export default function WeatherPanel() {
       ) : (
         <div className="flex flex-col gap-3">
           <div className="flex flex-col gap-4 justify-center">
+            <p className="text-4xl sm:text-5xl lg:text-7xl font-semibold">
+              {location}
+            </p>
             <p className="text-2xl lg:text-4xl">
               {currentWeather?.temperature_2m !== undefined
                 ? `${weatherData.current.temperature_2m} °C`

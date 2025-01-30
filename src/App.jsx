@@ -8,6 +8,7 @@ import FutureForecast from "./components/FutureForecast";
 import { GlobalContext } from "./Context";
 import { getRandomNumber } from "./utils/helper-functions/helper";
 import { weatherQuotes } from "./utils/data/data";
+import DarkMode from "./components/DarkMode";
 
 function App() {
   const {
@@ -128,19 +129,31 @@ function App() {
     <>
       <div
         id="project-wrapper"
-        className="min-h-screen flex justify-center dark:bg-[url('../light.jpg')] bg-cover bg-center bg-no-repeat bg-gray-100 transition-colors duration-300 font-inter"
+        className="min-h-screen flex relative justify-center dark:bg-[url('../light.jpg')] bg-cover bg-center bg-no-repeat bg-gray-100 transition-colors duration-300 font-inter"
       >
+        <div className="absolute left-7 top-7">
+          <DarkMode />
+        </div>
+
         <div
           id="main-container"
-          className="flex flex-col 2xl:flex-row border-2 border-gray-900 justify-center items-center 2xl:mt-5 w-[95%] h-[95%] 2xl:w-[70%] min-h-[800px] pb-10 dark:bg-gradient-to-br dark:dark-gradient bg-sky-100 shadow-lg rounded-lg gap-5 my-3 transition-colors duration-300"
+          className="flex flex-col 1xl:flex-row lg:flex-col 2xl:flex-row border-2 border-gray-900 justify-center items-center 2xl:mt-5 w-[95%] h-[95%] 2xl:w-[70%] min-h-[800px] pb-10 dark:bg-gradient-to-br dark:dark-gradient bg-sky-100 shadow-lg rounded-lg gap-5 my-3 transition-colors duration-300"
         >
           <div
             id="middle-container"
-            className="flex flex-col w-full justify-center items-center gap-5 p-1 2xl:w-[60%] "
+            className={`flex flex-col w-full justify-center items-center gap-5 p-1 2xl:w-[60%] ${
+              !weatherData ? "2xl:h-[500px]" : ""
+            }`}
           >
             {!weatherData && (
-              <h1 className="text-white text-4xl">{currentTitle}</h1>
+              <div className="flex flex-col gap-5 ">
+                <h1 className="text-white text-4xl text-center">
+                  My Weather App
+                </h1>
+                <h3 className="text-white text-2xl">{currentTitle}</h3>
+              </div>
             )}
+
             <SearchBar />
 
             <WeatherPanel />

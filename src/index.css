@@ -38,6 +38,12 @@
 }
 
 @layer utilities {
+  .dark-gradient-toggle {
+    @apply dark:bg-gradient-to-br dark:from-[#6b6b6b] dark:to-[#474747];
+  }
+}
+
+@layer utilities {
   .dark-gradient-search {
     @apply dark:bg-gradient-to-br dark:from-[#080808] dark:to-[#2c2c2c];
   }
