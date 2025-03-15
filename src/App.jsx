@@ -70,6 +70,7 @@ function App() {
       const res = await fetch(url);
       if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
       const data = await res.json();
+      console.log("API Response:", res);
 
       if (!data || data.length === 0) return null; // Handle empty response
       return data;
@@ -100,12 +101,18 @@ function App() {
   useEffect(() => {
     if (!location) return;
 
-    const fetchData = async () => {
+     const fetchData = async () => {
       const data = await fetchAPIdata(
         `https://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=1&appid=${
           import.meta.env.VITE_WEATHER_APP_API_KEY
         }`
-      );
+      ); 
+
+    /* const data = await fetchAPIdata(
+      `/api/openweathermap/geo/1.0/direct?q=${location}&limit=1&appid=${
+        import.meta.env.VITE_WEATHER_APP_API_KEY
+      }`
+    ); */
 
       if (data !== null) {
         console.log(data);
